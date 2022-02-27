@@ -1,1 +1,36 @@
-<p>log-in works!</p>
+<h2 class="text-xl text-center text-violet-900 text-bold">Bienvenido!</h2>
+<div id="logo" class="flex items-center justify-center my-5">
+    <img src="" alt="" class="min-h-[6rem] bg-gray-300 w-[6rem] rounded-full">
+</div>
+<form [formGroup]="loginForm" class="text-violet-900" (submit)="login()">
+    <div class="mb-4 flex flex-col items-center">
+        <label class="block text-sm font-bold mb-2" for="username">
+            Correo Institucional
+        </label>
+        <input required class="shadow appearance-none border rounded 
+            bg-gray-300
+            w-full py-2 px-3 text-gray-700 leading-tight 
+            focus:outline-none focus:shadow-outline
+            max-w-[75%]" id="username" type="text" placeholder="Correo institucional" formControlName="email">
+    </div>
+    <div class="mb-6 flex flex-col items-center">
+        <label class="block text-violet-900 text-sm font-bold mb-2" for="password">
+            Contraseña
+        </label>
+        <input required class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 
+            bg-gray-300 text-gray-700 mb-3 leading-tight 
+            focus:outline-none focus:shadow-outline
+            max-w-[75%]" id="password" type="password" placeholder="******************" formControlName="password">
+        <p class="text-red-500 text-xs italic">Por favor indica la contraseña.</p>
+    </div>
+    <div class="mb-6 flex flex-col justify-center items-center">
+        <a href="#" (onclick)="forgotPassword()" class="my-2">¿Olvidaste tu contraseña?</a>
+        <a href="#" routerLink="/auth/signin" class="my-2">¿No tienes una cuenta? <strong>Crear Cuenta</strong></a>
+        <button
+            class="rounded-full bg-violet-400 my-2 px-4 py-2 text-neutral-50 font-bold hover:bg-violet-700">Iniciar
+            sesión</button>
+    </div>
+
+
+
+</form>
