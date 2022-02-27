@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [{
   path:'',
+  canActivate:[AuthGuard],
   children:[
     {path: 'material', component: MaterialComponent},
     {path: '', redirectTo:'material', 
