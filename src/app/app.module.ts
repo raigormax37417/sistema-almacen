@@ -1,4 +1,3 @@
-import { AuthModule } from './auth/auth.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,7 +14,6 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
   ],
   imports: [
     BrowserModule,
-    AuthModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

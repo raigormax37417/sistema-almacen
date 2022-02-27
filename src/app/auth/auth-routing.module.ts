@@ -5,12 +5,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'auth',
+    path: '',
 
     children: [
       { path: 'login', component: LogInComponent },
       { path: 'signin', component: SignInComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
+      { path: '**', redirectTo: 'login', pathMatch: 'full' }
     ]
   }
 ]
