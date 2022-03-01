@@ -1,0 +1,5 @@
+<div class="bg-blue-300 w-full h-screen text-center flex flex-wrap flex-col gap-4 items-center justify-center">
+  <label>Código QR</label>
+  <qrcode [qrdata]="myAngularQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+  <button type="button" class="bg-lime-800 rounded text-slate-100 p-2" routerLink="/">Regresar</button>
+</div>
