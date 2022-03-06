@@ -23,7 +23,9 @@ confirmForm : FormGroup
   }
   
   completeRegister(){
-
+    if (this.confirmForm.invalid) return 0
+    this.router.navigate(['auth'])
+    return 1
   }
 
 }
