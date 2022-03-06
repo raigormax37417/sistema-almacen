@@ -11,6 +11,7 @@ export interface User{
 })
 export class AuthService {
   userLoggedIn : Boolean
+  redirectUrl : string = ''
   // user$: Observable<User>
   constructor(private auth: Auth, private router : Router) { 
     this.userLoggedIn = false
@@ -46,6 +47,7 @@ export class AuthService {
   logout(){
     this.auth.signOut()
     this.userLoggedIn=false
+    this.router.navigate(['auth'])
   }
   isLoggedIn(){
     return !!this.auth.currentUser

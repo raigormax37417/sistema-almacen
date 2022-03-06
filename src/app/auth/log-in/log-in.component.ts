@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,16 +9,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
-
+  emailError = ''
+  passwordError = ''
   loginForm: FormGroup
+
+  private validationMessages: { [char: string]: string } ={
+    required: 'Campo requerido',
+    email: 'No se reconoce como email válido',
+    pattern: 'Debe usar su email institucional',
+    minlength: 'El campo no cumple con el mínimo de caracteres',
+    maxlength: 'El campo excede el máximo de caracteres'
+  }
+
   constructor(private fb: FormBuilder, private router : Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
-      email: '',
-      password: ''
+      email: new FormControl('',[Validators.required, Validators.minLength(5), Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@voaxaca.tecnm.mx$')]),
+      password: new FormControl('', [Validators.required, Validators.minLength(5)])
     })
    }
 
   ngOnInit(): void {
+    let email = this.loginForm.get('email')!
+    let password = this.loginForm.get('password')!
+    if (email) 
+    email.valueChanges.subscribe(val => this.emailError=this.setMessage(email))
+    if (password) 
+    password.valueChanges.subscribe(val => this.passwordError=this.setMessage(password))
    
   }
   login(){
@@ -30,7 +46,22 @@ export class LogInComponent implements OnInit {
       password: this.loginForm.get('password')?.value,
     }
     this.authService.loginEmail(user)
+    if (this.authService.redirectUrl) {
+      this.router.navigateByUrl(this.authService.redirectUrl)
+    } else {
+      this.router.navigate(['auth'])
+    }
   }
+  
   forgotPassword(){}
+
+  setMessage(control: AbstractControl){
+    if((control.touched || control.dirty) && control.errors)
+    return Object.keys(control.errors).map(
+      key => this.validationMessages[key]
+    ).join('. ')
+
+    return ''
+  }
 
 }
