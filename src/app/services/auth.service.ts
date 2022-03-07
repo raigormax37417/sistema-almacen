@@ -40,9 +40,10 @@ export class AuthService {
     
     
   }
-  loginGoogle(){
-    signInWithPopup(this.auth,new firebase.auth.GoogleAuthProvider());
+  async loginGoogle(){
+    let result = await signInWithPopup(this.auth,new GoogleAuthProvider());
     this.userLoggedIn = true
+    this.router.navigate(['students'])
   }
   logout(){
     this.auth.signOut()
