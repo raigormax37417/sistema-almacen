@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { StudentsRoutingModule } from './students-routing.module';
 import { MaterialComponent } from './material/material.component';
 
-
 @NgModule({
   declarations: [
-    MaterialComponent
+    MaterialComponent,
   ],
   imports: [
     CommonModule,
-    StudentsRoutingModule
+    StudentsRoutingModule,
   ]
 })
 export class StudentsModule { }
