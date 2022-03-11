@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
+import { Observable, of, switchMap } from 'rxjs';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, authState, updateProfile } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from "firebase/compat/app";
 export interface User{
   email:string
