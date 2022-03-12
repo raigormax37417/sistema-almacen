@@ -6,10 +6,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GetDataFirestoreService {
-
+  
   constructor(private firestore: AngularFirestore) { }
+  
   getDataFirestore(): Observable<any> {
     let db = this.firestore;
     return db.collection('herramientas').snapshotChanges();
+  }
+
+  updateDataFirestore(documentID:string, value: number) {
+    let db = this.firestore;
+    return db.collection('herramientas').doc(documentID).update({
+      cantidad: value  
+    });
   }
 }

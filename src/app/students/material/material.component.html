@@ -1,36 +1,53 @@
 <div class="flex flex-col">
   <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-      <div class="overflow-x-auto">
-        <table class="min-w-full">
+      <div class="sm:overflow-x-auto px-0 p-8">
+        <input type="text" name="searchTool"
+         class="
+         form-control block w-96 px-3 py-1.5
+         text-base font-normal text-gray-700
+         bg-white bg-clip-padding
+         border border-solid border-gray-300
+         rounded transition ease-in-out m-0 mr-4 mb-4
+         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+          placeholder="Nombre de la herramienta" #searchTool (keyup)="onSearchTool(searchTool.value)"/>
+        <table class="min-w-full table-auto">
           <thead class="border-b bg-gray-300">
             <tr>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
                 Herramienta 
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
                 Cantidad
               </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Disponible
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
+               Opciones 
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of dataFirestore" class="border-b">
-              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+            <tr *ngFor="let data of dataFirestore | tools:page:search" class="border-b">
+              <td class="text-xs md:text-sm text-gray-900 font-light px-6 py-4 whitespace-normal">
                 {{data.herramienta}}
               </td>
-              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+              <td class="text-xs md:text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 {{data.cantidad}}
               </td>
-              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                {{data.cantidad}}
+              <td class="text-xs sm:text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                <button type="button" class="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 mx-1 px-3 sm:px-4 rounded-full">+</button>
+                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 mx-1 sm:px-4 rounded-full">X</button>
               </td>
             </tr>
           </tbody>
         </table>
-        <button type="button" class="bg-blue-300 rounded w-30 text-center p-2">Generar QR</button>
+        <div class="container mt-2 mb-2 flex flex-col sm:flex-row w-full sm:space-x-3 justify-center">
+        <button type="button" class="bg-slate-300 rounded w-30 text-center p-2" (click)="prevPage()">Anterior</button>
+        <button type="button" class="bg-green-300 rounded w-30 text-center p-2 " (click)="nextPage()" 
+            [disabled]="(dataFirestore | tools:page:search).length === 0">Siguiente</button>
+        </div>
+        <div class="flex justify-center">
+          <button type="button" class="bg-blue-300 flex content-center rounded w-30 text-center p-2" routerLink="/students/qrdata" (click)="addDataQR()" >Generar QR</button>
+        </div>
       </div>
     </div>
   </div>
