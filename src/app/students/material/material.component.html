@@ -46,7 +46,8 @@
             [disabled]="(dataFirestore | tools:page:search).length === 0">Siguiente</button>
         </div>
         <div class="flex justify-center">
-          <button type="button" class="bg-blue-300 flex content-center rounded w-30 text-center p-2" routerLink="/students/qrdata" (click)="addDataQR()" >Generar QR</button>
+          <button type="button" class="bg-blue-300 flex content-center rounded w-30 text-center p-2" (click)="addDataQR()" >Generar QR</button>
+          <a routerLink="/students/qrcode">Ver QR</a>
         </div>
       </div>
     </div>
