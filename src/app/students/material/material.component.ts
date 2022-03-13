@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GetDataFirestoreService } from 'src/app/services/get-data-firestore.service';
+import { onSnapshot, QuerySnapshot } from 'firebase/firestore';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class MaterialComponent implements OnInit {
   ngOnInit(): void {
     this.getDataOnFirestore();
   }
-   getDataOnFirestore() {
+   /*getDataOnFirestore() {
     this._getDataOnFirestore.getDataFirestore().subscribe(data=> {
       this.dataFirestore = [];
       data.forEach((element:any) => {
@@ -26,7 +27,16 @@ export class MaterialComponent implements OnInit {
           ...element.payload.doc.data()
         });
       });
-    })
+    })*/
+  getDataOnFirestore() {
+    const fire = this._getDataOnFirestore.getDataFirestore();
+    const unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
+      this.dataFirestore = [];
+      QuerySnapshot.forEach(doc => {
+        console.log(doc.data());
+       this.dataFirestore.push(doc.data());
+      });
+    });
   }
 
   addDataQR() {

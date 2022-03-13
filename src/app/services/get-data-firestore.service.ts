@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Firestore,collection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetDataFirestoreService {
   
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: Firestore) { }
   
-  getDataFirestore(): Observable<any> {
-    let db = this.firestore;
-    return db.collection('herramientas').snapshotChanges();
+  getDataFirestore() {
+    const dataRef = collection(this.firestore,'herramientas');
+    return dataRef;
   }
 
-  updateDataFirestore(documentID:string, value: number) {
-    let db = this.firestore;
-    return db.collection('herramientas').doc(documentID).update({
-      cantidad: value  
-    });
+  updateDataFirestore() {
   }
 }

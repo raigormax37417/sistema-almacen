@@ -34,8 +34,8 @@
                 {{data.cantidad}}
               </td>
               <td class="text-xs sm:text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                <button type="button" class="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 mx-1 px-3 sm:px-4 rounded-full">+</button>
-                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 mx-1 sm:px-4 rounded-full">X</button>
+                <button type="button" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold py-2 mx-1 px-3 sm:px-4 rounded-full">+</button>
+                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 mx-1 sm:px-4 rounded-full">X</button>
               </td>
             </tr>
           </tbody>
@@ -45,9 +45,9 @@
         <button type="button" class="bg-green-300 rounded w-30 text-center p-2 " (click)="nextPage()" 
             [disabled]="(dataFirestore | tools:page:search).length === 0">Siguiente</button>
         </div>
-        <div class="flex justify-center">
-          <button type="button" class="bg-blue-300 flex content-center rounded w-30 text-center p-2" (click)="addDataQR()" >Generar QR</button>
-          <a routerLink="/students/qrcode">Ver QR</a>
+        <div class="flex flex-col md:flex-row flex-wrap sm:space-x-3 justify-center">
+          <button type="button" class="bg-blue-300 content-center rounded w-30 text-center p-2" (click)="addDataQR()" >Generar QR</button>
+          <a class="bg-purple-500 rounded p-2 text-center" routerLink="/students/qrcode">Ver QR</a>
         </div>
       </div>
     </div>
