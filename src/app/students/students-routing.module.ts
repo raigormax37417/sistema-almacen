@@ -1,3 +1,4 @@
+import { CompleteSignUpGuard } from './../guards/complete-sign-up.guard';
 import { AuthGuard } from './../guards/auth.guard';
 import { MaterialComponent } from './material/material.component';
 import { NgModule } from '@angular/core';
@@ -7,6 +8,7 @@ import { QrcodeComponent } from './qrcode/qrcode.component';
 const routes: Routes = [{
   path:'',
   canActivate:[AuthGuard],
+  canActivateChild:[CompleteSignUpGuard],
   children:[
     {path: 'material', component: MaterialComponent},
     {path: 'qrcode', component: QrcodeComponent},

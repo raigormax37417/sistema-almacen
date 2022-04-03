@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: 'students', loadChildren: () => import('./students/students.module').then(e => e.StudentsModule)},
   {path: 'admin', loadChildren: () => import('./admin/admin.module').then(e => e.AdminModule)},
   {path: 'profile', component:ProfileComponent},
-  {path: 'qrcomponents', loadChildren: () => import('./qrcomponents/qrcomponents.module').then(e => e.QrcomponentsModule) },
+  // {path: 'qrcomponents', loadChildren: () => import('./qrcomponents/qrcomponents.module').then(e => e.QrcomponentsModule) },
   {path: '', redirectTo: 'auth', pathMatch: 'full'},
   
 ];
