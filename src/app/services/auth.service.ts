@@ -3,81 +3,106 @@ import { Observable, of, switchMap, take } from 'rxjs';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, authState, updateProfile } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import firebase from "firebase/compat/app";
-import { doc, docData, Firestore } from '@angular/fire/firestore';
+import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+
+export interface Roles {
+  student?: Boolean
+  admin?: Boolean
+}
+
 export interface User {
   uid: string
   email: string
-  displayName: string
+  displayName?: string
+  roles?: Roles
+  profile?:string
 }
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly ADMIN_PATH = 'admin'
+  private readonly USER_PATH = 'students'
   userLoggedIn: Boolean
   redirectUrl: string = ''
   user$: Observable<User | null>
   constructor(private auth: Auth, private router: Router, private firestore: Firestore) {
     this.userLoggedIn = false
     this.user$ = authState(this.auth).pipe(
-      take(1),
       switchMap(user => {
-        console.log({user},user);
-        
-        if (user){
-          let docu = docData(doc(this.firestore, `users/${user.uid}`)) as Observable<User>
-          return docu
+        if (user) {
+          console.log(user);
+          this.userLoggedIn = true
+          localStorage.setItem('user', JSON.stringify(user))
+          return docData(doc(firestore, `users/${user?.uid}`)) as Observable<User>
+
         }
-        
-        console.log({user: "no user"});
+        localStorage.removeItem('user')
         return of(null)
-      })
-    )
-    console.log(this.user$);
-    
-    this.auth.onAuthStateChanged((loggedUser) => {
-      if (loggedUser) {
-        this.userLoggedIn = true
-        this.user$ = of({ uid: loggedUser.uid, email: loggedUser.email!, displayName: loggedUser.displayName! })
-        this.userLoggedIn = true
-        this.router.navigateByUrl(this.redirectUrl)
-        
-      } else {
-        this.userLoggedIn = false
-        this.user$ = of(null)
+
       }
-    })
+      )
+    )
+    this.user$.subscribe(user => {
+      console.log('update',{ user });
+      if (user)
+        this.redirect(user)
+      this.router.navigate([this.redirectUrl])
+
+    }
+    )
   }
+  redirect(user: User | null): void {
+    console.log(user?.roles?.admin);
+
+    if (user?.roles?.admin) {
+      this.redirectUrl = this.redirectUrl ? this.redirectUrl : this.ADMIN_PATH
+      return
+    }
+    this.redirectUrl = this.USER_PATH
+  }
+
   signUp(user: any): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, user.email, user.password)
       .then(r => {
         let emailLower = user.email.toLowerCase();
-        updateProfile(r.user,{displayName: user.displayName})
-        console.log(r.user.emailVerified)
-      }).catch(e=> e as string)
+
+        return this.updateUserData({
+          uid: r.user.uid,
+          email: r.user.email!
+        })
+
+      }).catch(e => e as string)
   }
 
   async loginEmail(user: any): Promise<any> {
 
     try {
-      
-      
-      console.log(user);
-      let login = await signInWithEmailAndPassword(this.auth, user.email, user.password)
-      console.log(login.user);
-      this.userLoggedIn = true
-      this.router.navigate(['students'])
-    } catch (error) {
-      console.log('error',error);
-      return error
-      
-  }
 
+
+      let login = await signInWithEmailAndPassword(this.auth, user.email, user.password)
+      console.log(login);
+      
+      // this.updateUserData(user)
+      this.userLoggedIn = true
+      console.log({ login });
+
+      this.router.navigate([this.USER_PATH])
+    } catch (error) {
+      console.log('error', error);
+      return error
+
+    }
 
   }
   async loginGoogle() {
     let result = await signInWithPopup(this.auth, new GoogleAuthProvider());
+    console.log({result});
+    this.updateUserData(result.user as unknown as User)
+    
     this.userLoggedIn = true
-    this.router.navigate(['students'])
+    this.router.navigate([this.USER_PATH])
   }
   logout() {
     this.auth.signOut()
@@ -86,5 +111,14 @@ export class AuthService {
   }
   isLoggedIn() {
     return !!this.auth.currentUser
+  }
+  updateUserData(user: User) {
+    const userRef = doc(this.firestore, `users/${user.uid}`)
+    const data: User = {
+      uid: user.uid,
+      email: user.email,
+      roles: { student: true }
+    }
+    return setDoc(userRef, data, { merge: true })
   }
 }

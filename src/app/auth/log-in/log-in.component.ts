@@ -45,7 +45,11 @@ export class LogInComponent implements OnInit {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
     }
-    this.authService.loginEmail(user)
+    console.log(user);
+    
+    let loged = this.authService.loginEmail(user)
+    console.log(loged);
+    
     if (this.authService.redirectUrl) {
       this.router.navigateByUrl(this.authService.redirectUrl)
     } else {

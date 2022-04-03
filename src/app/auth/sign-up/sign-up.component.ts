@@ -64,19 +64,17 @@ export class SignUpComponent implements OnInit {
     let email = this.signUpForm.get('email')!
     let password = this.signUpForm.get('password')!
     let passwordConfirm = this.signUpForm.get('confirmPassword')!
-
+    
     fullName.valueChanges.subscribe(val => this.fullNameError = this.setMessage(fullName))
     email.valueChanges.subscribe(val => this.emailError = this.setMessage(email))
     password.valueChanges.subscribe(val => this.passwordError = this.setMessage(password))
     passwordConfirm.valueChanges.subscribe(val => this.passwordConfirmError = this.setMessage(passwordConfirm))
-
+    
   }
   register() {
+    let fullName = this.signUpForm.get('fullName')!
     let password = this.signUpForm.get('password')
     let confirmPassword = this.signUpForm.get('confirmPassword')
-    console.log({ pass: password?.value, conf: confirmPassword?.value });
-    console.log(password?.value != confirmPassword?.value);
-    console.log(this.signUpForm.invalid, password?.value == "");
 
 
     if (password?.value == "" ||
@@ -89,9 +87,19 @@ export class SignUpComponent implements OnInit {
     let user = {
       email: this.signUpForm.get('email')?.value,
       password: password?.value,
+      displayName: fullName.value
     }
-    // this.authService.signUp(user)
-    this.router.navigateByUrl('auth/confirm')
+    this.authService.signUp(user).then(r =>{
+      if (r) {
+        console.log(r);
+        
+        // this.router.navigateByUrl('auth/confirm')
+      }
+      else{
+        alert(r)
+      }
+    })
+    
 
   }
 

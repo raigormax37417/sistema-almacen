@@ -9,10 +9,12 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 //components
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
