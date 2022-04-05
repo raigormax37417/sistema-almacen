@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { ConfirmComponent } from './confirm/confirm.component';
 
 
 
@@ -12,7 +11,6 @@ import { ConfirmComponent } from './confirm/confirm.component';
   declarations: [
     SignUpComponent,
     LogInComponent,
-    ConfirmComponent
   ],
   imports: [
     CommonModule,

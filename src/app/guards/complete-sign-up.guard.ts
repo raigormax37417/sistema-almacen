@@ -1,3 +1,4 @@
+import { ProfileService } from './../services/profile.service';
 import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
@@ -10,7 +11,7 @@ export class CompleteSignUpGuard implements CanActivateChild {
 
 
 
-constructor(private authService: AuthService, private router:Router){}
+  constructor(private authService: AuthService, private profileService: ProfileService, private router: Router) { }
 
   canActivateChild(
     route: ActivatedRouteSnapshot,
@@ -19,14 +20,20 @@ constructor(private authService: AuthService, private router:Router){}
   }
 
   checkStudentRole() {
-    return this.authService.user$.pipe(
-      take(1),
-      map(user => !!user?.profile),
-      tap((hasProfile) => {
-        if (!hasProfile)
-          this.router.navigate(['profile'])
-      })
+    return this.profileService.profile.pipe(map(profile => {
+      console.log(!!profile)
+      return !!profile
+    }),
+    tap(res =>{
+      console.log({res});
+      if (res) {
+        return true
+      }
+      this.router.navigate(['auth/confirm'])
+      return res
+      
+    })
     )
   }
-  
+
 }

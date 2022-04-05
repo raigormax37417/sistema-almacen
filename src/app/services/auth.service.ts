@@ -32,7 +32,6 @@ export class AuthService {
     this.user$ = authState(this.auth).pipe(
       switchMap(user => {
         if (user) {
-          console.log(user);
           this.userLoggedIn = true
           localStorage.setItem('user', JSON.stringify(user))
           return docData(doc(firestore, `users/${user?.uid}`)) as Observable<User>
@@ -54,13 +53,12 @@ export class AuthService {
     )
   }
   redirect(user: User | null): void {
-    console.log(user?.roles?.admin);
 
     if (user?.roles?.admin) {
       this.redirectUrl = this.redirectUrl ? this.redirectUrl : this.ADMIN_PATH
       return
     }
-    this.redirectUrl = this.USER_PATH
+    this.redirectUrl = this.redirectUrl ? this.redirectUrl :this.USER_PATH
   }
 
   signUp(user: any): Promise<any> {
@@ -86,11 +84,9 @@ export class AuthService {
       
       // this.updateUserData(user)
       this.userLoggedIn = true
-      console.log({ login });
 
       this.router.navigate([this.USER_PATH])
     } catch (error) {
-      console.log('error', error);
       return error
 
     }
@@ -98,7 +94,6 @@ export class AuthService {
   }
   async loginGoogle() {
     let result = await signInWithPopup(this.auth, new GoogleAuthProvider());
-    console.log({result});
     this.updateUserData(result.user as unknown as User)
     
     this.userLoggedIn = true

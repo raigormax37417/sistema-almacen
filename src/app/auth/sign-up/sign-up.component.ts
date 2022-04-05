@@ -83,7 +83,6 @@ export class SignUpComponent implements OnInit {
     )
       return alert('datos pls');
 
-    console.log(this.signUpForm.controls);
     let user = {
       email: this.signUpForm.get('email')?.value,
       password: password?.value,
@@ -91,8 +90,6 @@ export class SignUpComponent implements OnInit {
     }
     this.authService.signUp(user).then(r =>{
       if (r) {
-        console.log(r);
-        
         // this.router.navigateByUrl('auth/confirm')
       }
       else{

@@ -1,1 +1,54 @@
-<p>profile works!</p>
+<form class="h-full mt-10" [formGroup]="confirmForm" (ngSubmit)="completeRegister()">
+    <h2 class="text-xl text-center text-teal-500 font-bold">Confirmar Datos</h2>
+    <div id="logo" class="flex items-center justify-center my-5">
+        <img src="" alt="" class="min-h-[6rem] bg-gray-300 w-[6rem] rounded-full">
+    </div>
+
+    <div class="flex flex-col items-center mt-10">
+        <input id="name" type="text" placeholder="Nombre" class="shadow appearance-none
+        rounded w-full py-2 px-3 
+        bg-gray-300 text-gray-700 mb-4 leading-tight 
+        focus:outline-none focus:shadow-outline
+        max-w-[75%]"
+        formControlName="name"
+        required
+        >
+        <input id="carrera" type="text" placeholder="Carrera" class="shadow appearance-none
+        rounded w-full py-2 px-3 
+        bg-gray-300 text-gray-700 mb-4 leading-tight 
+        focus:outline-none focus:shadow-outline
+        max-w-[75%]"
+        formControlName="career"
+        required
+        >
+        <input id="num-control" type="text" placeholder="Número de Control" class="shadow appearance-none
+        rounded w-full py-2 px-3 
+        bg-gray-300 text-gray-700 mb-4 leading-tight 
+        focus:outline-none focus:shadow-outline
+        max-w-[75%]"
+        formControlName="controlNumber"
+        required
+        >
+        <input id="semestre" type="text" placeholder="Semestre" class="shadow appearance-none
+        rounded w-full py-2 px-3 
+        bg-gray-300 text-gray-700 mb-4 leading-tight 
+        focus:outline-none focus:shadow-outline
+        max-w-[75%]"
+        formControlName="semester"
+        required
+        >
+        <input id="grupo" type="text" placeholder="Grupo" class="shadow appearance-none
+        rounded w-full py-2 px-3 
+        bg-gray-300 text-gray-700 mb-4 leading-tight 
+        focus:outline-none focus:shadow-outline
+        max-w-[75%]"
+        formControlName="group"
+        required
+        >
+        <button class="rounded-full bg-teal-500 my-4 px-4 py-2 text-neutral-50 font-bold hover:bg-violet-700">Completar Datos</button>
+        
+    </div>
+    
+    
+    
+</form>

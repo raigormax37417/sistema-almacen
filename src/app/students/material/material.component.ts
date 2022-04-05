@@ -33,7 +33,7 @@ export class MaterialComponent implements OnInit {
     const unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
       this.dataFirestore = [];
       QuerySnapshot.forEach(doc => {
-        console.log(doc.data());
+        // console.log(doc.data());
        this.dataFirestore.push(doc.data());
       });
     });
