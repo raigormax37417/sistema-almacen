@@ -29,7 +29,10 @@ userProfile : Profile | null = null
       profile =>{
         console.log('pr', profile);
         this.userProfile = profile!
-        this.setValues(profile!)
+        if (!!profile) {
+          this.setValues(profile!)
+          
+        }
         
       }
     )

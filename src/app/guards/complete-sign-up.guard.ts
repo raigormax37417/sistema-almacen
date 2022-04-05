@@ -29,7 +29,7 @@ export class CompleteSignUpGuard implements CanActivateChild {
       if (res) {
         return true
       }
-      this.router.navigate(['auth/confirm'])
+      this.router.navigate(['/profile'])
       return res
       
     })

@@ -94,7 +94,7 @@ export class AuthService {
   }
   async loginGoogle() {
     let result = await signInWithPopup(this.auth, new GoogleAuthProvider());
-    this.updateUserData(result.user as unknown as User)
+    await this.updateUserData(result.user as unknown as User)
     
     this.userLoggedIn = true
     this.router.navigate([this.USER_PATH])
