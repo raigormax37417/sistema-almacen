@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Firestore,collection } from '@angular/fire/firestore';
+import { Injectable, QueryList } from '@angular/core';
+import { doc, Firestore,collection, collectionChanges, CollectionReference, query } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetDataFirestoreService {
-  
+    
+  private path = "herramientas/";
+
   constructor(private firestore: Firestore) { }
   
-  getDataFirestore() {
-    const dataRef = collection(this.firestore,'herramientas');
-    return dataRef;
+  getDataFirestore<tipo>() {
+   const dataRef = collection(this.firestore, this.path);
+   return dataRef;
   }
 
-  updateDataFirestore() {
+
+  updateDataFirestore(path: string, id: string) {
+    return doc(this.firestore, path, id);
   }
 }

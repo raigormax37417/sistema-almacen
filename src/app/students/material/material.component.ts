@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { GetDataFirestoreService } from 'src/app/services/get-data-firestore.service';
-import { onSnapshot, QuerySnapshot } from 'firebase/firestore';
-
+import { onSnapshot, QuerySnapshot, collection } from 'firebase/firestore';
+import { Tool } from 'src/app/interfaces';
+import { ToolsService } from 'src/app/services/tools.service';
 
 @Component({
   selector: 'app-material',
@@ -12,37 +13,31 @@ export class MaterialComponent implements OnInit {
   public page: number = 0;
   public search: string = "";
 
-  dataFirestore:any[] = [];
-  constructor(private _getDataOnFirestore: GetDataFirestoreService) { }
+  dataArrayTools: any[] = [];
+  
+  tools : Tool[] = [];
+  private unusubscribe: any;
+
+  constructor(private _getDataOnFirestore: GetDataFirestoreService,
+              private _tools : ToolsService) { }
 
   ngOnInit(): void {
     this.getDataOnFirestore();
   }
-   /*getDataOnFirestore() {
-    this._getDataOnFirestore.getDataFirestore().subscribe(data=> {
-      this.dataFirestore = [];
-      data.forEach((element:any) => {
-        this.dataFirestore.push({
-          id: element.payload.doc.id,
-          ...element.payload.doc.data()
-        });
-      });
-    })*/
-  getDataOnFirestore() {
-    const fire = this._getDataOnFirestore.getDataFirestore();
-    const unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
-      this.dataFirestore = [];
+   getDataOnFirestore() {
+    const fire = this._getDataOnFirestore.getDataFirestore<Tool>();
+    this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
+      const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
-        // console.log(doc.data());
-       this.dataFirestore.push(doc.data());
+       dataFirestore.push(doc.data());
+       this.tools = dataFirestore;    
       });
     });
   }
-
-  addDataQR() {
-    console.log("clicked");
+  
+  generateQR() {
+    this.unusubscribe();
   }
-
   nextPage() {
     this.page+=5;
   }
@@ -54,5 +49,4 @@ export class MaterialComponent implements OnInit {
       this.page = 0;
       this.search = search;
   }
-
 }

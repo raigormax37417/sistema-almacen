@@ -26,16 +26,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of dataFirestore | tools:page:search" class="border-b">
+            <tr *ngFor="let tool of tools | tools:page:search" class="border-b">
               <td class="text-xs md:text-sm text-gray-900 font-light px-6 py-4 whitespace-normal">
-                {{data.herramienta}}
+                {{tool.herramienta}}
+                <input type="hidden" name="tools" #dataTools value="{{tool.herramienta}}">
               </td>
-              <td class="text-xs md:text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                {{data.cantidad}}
+    <td class="text-xs md:text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                {{tool.cantidad}}
+                <input type="hidden" name="cantidad" #dataAmount disabled value="{{tool.cantidad}}">
               </td>
               <td class="text-xs sm:text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                <button type="button" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold py-2 mx-1 px-3 sm:px-4 rounded-full">+</button>
-                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 mx-1 sm:px-4 rounded-full">X</button>
+                <button type="button" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold
+                  py-2 mx-1 px-3 sm:px-4 rounded-full">+</button>
+                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2
+                  px-3 mx-1 sm:px-4 rounded-full">X</button>
               </td>
             </tr>
           </tbody>
@@ -43,11 +47,10 @@
         <div class="container mt-2 mb-2 flex flex-col sm:flex-row w-full sm:space-x-3 justify-center">
         <button type="button" class="bg-slate-300 rounded w-30 text-center p-2" (click)="prevPage()">Anterior</button>
         <button type="button" class="bg-green-300 rounded w-30 text-center p-2 " (click)="nextPage()" 
-            [disabled]="(dataFirestore | tools:page:search).length === 0">Siguiente</button>
+            [disabled]="(tools | tools:page:search).length === 0">Siguiente</button>
         </div>
         <div class="flex flex-col md:flex-row flex-wrap sm:space-x-3 justify-center">
-          <button type="button" class="bg-blue-300 content-center rounded w-30 text-center p-2" (click)="addDataQR()" >Generar QR</button>
-          <a class="bg-purple-500 rounded p-2 text-center" routerLink="/students/qrcode">Ver QR</a>
+          <button type="button" class="bg-blue-300 content-center rounded w-30 text-center p-2" (click)="generateQR()" >Generar QR</button>
         </div>
       </div>
     </div>
