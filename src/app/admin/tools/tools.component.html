@@ -1,0 +1,46 @@
+<div class="bg-gray-200 w-full h-screen">
+  <form [formGroup]="generateTool" class="flex items-center flex-col justify-center">
+    <label for="tool" >Herramienta</label>
+    <input type="text" name="tool" formControlName="tool" 
+      placeholder="Ingrese el nombre de la herramienta"/>
+    <label for="amount" >Cantidad</label>
+    <input type="number" min="0" name="amount" formControlName="amount" placeholder="Ingrese la cantidad"/>
+    <button type="button" (click)="saveTool()">Guardar</button>
+  </form>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">
+                Herramienta 
+              </th>
+              <th scope="col">
+                Cantidad
+              </th>
+              <th scope="col">
+               Opciones 
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tool of tools | admin:page" class="border-b">
+              <td >
+                {{tool.herramienta}}
+                <input type="hidden" name="tools" #dataTools value="{{tool.herramienta}}">
+              </td>
+    <td>
+                {{tool.cantidad}}
+                <input type="hidden" name="cantidad" #dataAmount disabled value="{{tool.cantidad}}">
+              </td>
+              <td>
+                <button type="button">+</button>
+                <button type="button">X</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+        <button type="button" (click)="prevPage()">Anterior</button>
+        <button type="button" (click)="nextPage()" 
+            [disabled]="(tools | admin:page).length === 0">Siguiente</button>
+        </div>
+</div>

@@ -21,6 +21,8 @@ export interface Pedido {
 export interface Tool {
   herramienta: string;
   cantidad: number;
+  id: string;
+  date: Date;
 }
 
 export type statusPedido = "enviado" | "visto" | "camino" | "entregado";

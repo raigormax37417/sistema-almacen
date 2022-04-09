@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
-import { GetDataFirestoreService } from 'src/app/services/get-data-firestore.service';
-import { onSnapshot, QuerySnapshot, collection } from 'firebase/firestore';
+import { Component, OnInit } from '@angular/core';
+import { onSnapshot, QuerySnapshot } from 'firebase/firestore';
 import { Tool } from 'src/app/interfaces';
 import { ToolsService } from 'src/app/services/tools.service';
 
@@ -14,18 +13,17 @@ export class MaterialComponent implements OnInit {
   public search: string = "";
 
   dataArrayTools: any[] = [];
-  
+  private path = "herramientas/";
   tools : Tool[] = [];
   private unusubscribe: any;
 
-  constructor(private _getDataOnFirestore: GetDataFirestoreService,
-              private _tools : ToolsService) { }
+  constructor(private _tools : ToolsService) { }
 
   ngOnInit(): void {
     this.getDataOnFirestore();
   }
-   getDataOnFirestore() {
-    const fire = this._getDataOnFirestore.getDataFirestore<Tool>();
+  getDataOnFirestore() {
+    const fire = this._tools.getDataFirestore<Tool>(this.path);
     this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
       const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
@@ -34,7 +32,6 @@ export class MaterialComponent implements OnInit {
       });
     });
   }
-  
   generateQR() {
     this.unusubscribe();
   }

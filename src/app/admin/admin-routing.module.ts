@@ -2,6 +2,7 @@ import { AdminGuard } from './../guards/admin.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ToolsComponent } from './tools/tools.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,7 @@ const routes: Routes = [
     canActivate:[AdminGuard],
     children:[
       {path: 'dashboard', component: DashboardComponent },
+      {path: 'tools', component: ToolsComponent},
       {path:'**', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
   }
