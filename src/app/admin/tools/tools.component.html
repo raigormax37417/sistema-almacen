@@ -1,23 +1,23 @@
 <div class="bg-gray-200 w-full h-screen">
   <form [formGroup]="generateTool" class="flex items-center flex-col justify-center">
     <label for="tool" >Herramienta</label>
-    <input type="text" name="tool" formControlName="tool" 
+    <input type="text" name="tool" id="tool" formControlName="tool"
       placeholder="Ingrese el nombre de la herramienta"/>
     <label for="amount" >Cantidad</label>
-    <input type="number" min="0" name="amount" formControlName="amount" placeholder="Ingrese la cantidad"/>
+    <input type="number" min="0" name="amount" id="amount" formControlName="amount" placeholder="Ingrese la cantidad"/>
     <button type="button" (click)="saveTool()">Guardar</button>
   </form>
-        <table>
-          <thead>
+        <table class="min-w-full table-auto" >
+          <thead class="border-b bg-gray-300">
             <tr>
-              <th scope="col">
-                Herramienta 
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                Herramienta
               </th>
-              <th scope="col">
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
                 Cantidad
               </th>
-              <th scope="col">
-               Opciones 
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
+               Opciones
               </th>
             </tr>
           </thead>
@@ -27,20 +27,20 @@
                 {{tool.herramienta}}
                 <input type="hidden" name="tools" #dataTools value="{{tool.herramienta}}">
               </td>
-    <td>
+              <td>
                 {{tool.cantidad}}
                 <input type="hidden" name="cantidad" #dataAmount disabled value="{{tool.cantidad}}">
               </td>
               <td>
-                <button type="button">+</button>
-                <button type="button">X</button>
+                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">+</button>
+                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">X</button>
               </td>
             </tr>
           </tbody>
         </table>
         <div>
-        <button type="button" (click)="prevPage()">Anterior</button>
-        <button type="button" (click)="nextPage()" 
+        <button type="button" class="bg-slate-300 rounded w-30 text-center p-2" (click)="prevPage()">Anterior</button>
+        <button type="button" class="bg-slate-300 rounded w-30 text-center p-2" (click)="nextPage()"
             [disabled]="(tools | admin:page).length === 0">Siguiente</button>
         </div>
 </div>
