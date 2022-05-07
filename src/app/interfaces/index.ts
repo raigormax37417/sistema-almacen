@@ -5,15 +5,12 @@ export interface Profile {
   semester: string;
   group: string;
   career: string;
-  email : string;
-  nombre : string;
-  foto : string;
 }
 
 export interface Pedido {
   id : string;
   profile: Profile;
-  tool : Tool[];
+  tools : orderTool[];
   status: statusPedido;
   date : Date;
 }
@@ -23,6 +20,11 @@ export interface Tool {
   cantidad: number;
   id: string;
   date: Date;
+}
+
+export interface orderTool {
+  tool: Tool;
+  amount: number;
 }
 
 export type statusPedido = "enviado" | "visto" | "camino" | "entregado";

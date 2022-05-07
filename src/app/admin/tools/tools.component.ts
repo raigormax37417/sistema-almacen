@@ -41,7 +41,7 @@ export class ToolsComponent implements OnInit {
 
   saveTool() {
     if(this.isValid){
-      if(this.generateTool.invalid ) return;
+      if(this.generateTool.invalid ) { return };
       alert("Enviado con éxito");
     }
    this.newTool.herramienta = this.generateTool.value.tool; 

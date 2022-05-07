@@ -6,12 +6,14 @@ import { MaterialComponent } from './material/material.component';
 import { ToolsPipe } from '../pipes/tools.pipe';
 import { QrcodeComponent } from './qrcode/qrcode.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     MaterialComponent,
     ToolsPipe,
-    QrcodeComponent
+    QrcodeComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,

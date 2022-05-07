@@ -13,7 +13,7 @@ export class ToolsService {
     return setDoc(doc(this.firestore, path, id), data);
   }
 
-  getDoc(path: string, id: string) {
+  getDoc<tipo>(path: string, id: string) {
     return docData(doc(this.firestore, path, id));
   }
   

@@ -1,4 +1,7 @@
-<div class="flex justify-center">
-  <qrcode [qrdata]="dataQR" [width]="widthValue" [errorCorrectionLevel]="'M'"></qrcode>
+<div class="flex flex-col justify-center items-center">
+  <qrcode [qrdata]="dataQR" [allowEmptyString] ="qrState" [width]="widthValue" class="flex justify-center" [errorCorrectionLevel]="'M'"></qrcode>
+  
+  <button type="button" class="bg-cyan-500 w-64 text-base text-bold text-white 
+    rounded w-30 text-center p-2 mt-2" routerLink="/students/material">Regresar</button>
 </div>
 
