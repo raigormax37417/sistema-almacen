@@ -92,7 +92,7 @@ export class CartService {
   }
   makeOnOrder(): string {
     const item = this.pedido.tools.find( (orderTool) => {
-        return (orderTool.tool.id === this.isOrderExist.id);
+        return (orderTool.tool === this.isOrderExist);
       });
       if(item === undefined) {
         return "";
