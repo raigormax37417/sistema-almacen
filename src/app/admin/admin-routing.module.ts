@@ -1,3 +1,4 @@
+import { ScannerComponent } from './scanner/scanner.component';
 import { AdminGuard } from './../guards/admin.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,8 @@ const routes: Routes = [
     children:[
       {path: 'dashboard', component: DashboardComponent },
       {path: 'tools', component: ToolsComponent},
+      {path: 'scanner', component: ScannerComponent},
+      {path: 'orders', loadChildren: ()=>import('./orders/orders.module').then(e => e.OrdersModule)},
       {path:'**', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
   }

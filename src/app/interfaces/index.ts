@@ -27,6 +27,6 @@ export interface orderTool {
   amount: number;
 }
 
-export type statusPedido = "enviado" | "visto" | "camino" | "entregado";
+export type statusPedido = "enviado" | "visto" | "camino" | "prestado" | "entregado";
 
 

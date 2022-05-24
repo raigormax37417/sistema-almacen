@@ -6,15 +6,19 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolsComponent } from './tools/tools.component';
 import { AdminPipe } from '../pipes/admin.pipe';
+import { ScannerComponent } from './scanner/scanner.component';
+import { ZXingScannerModule } from "@zxing/ngx-scanner";
 
 @NgModule({
   declarations: [
     DashboardComponent,
     ToolsComponent,
-    AdminPipe
+    AdminPipe,
+    ScannerComponent,
   ],
   imports: [
     CommonModule,
+    ZXingScannerModule,
     AdminRoutingModule,
     ReactiveFormsModule
   ]
