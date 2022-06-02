@@ -1,1 +1,27 @@
-<p>dashboard works!</p>
+<div class="flex flex-col sm:flex-row mt-10 gap-4 justify-center" *ngIf="userAuth.isLoggedIn()">
+  <div class="flex justify-center">
+   <div class="block rounded-lg cursor-pointer shadow-lg bg-gray-300 max-w-sm text-center" routerLink="/admin/tools">
+    <div class="p-6 border border-gray-300 flex flex-col justify-center items-center">
+      <img class="" src="assets/img/tool-box.png" alt="icon-tool">
+      <h5 class="text-gray-900 text-xl font-medium mb-2">Agregar herramienta</h5>
+      <p class="text-gray-700 text-base mb-4">
+        En este apartado se podrá agregar una nueva herramienta al inventario del almacén. 
+      </p>
+    </div>
+   </div>
+  </div>
+  <div class="flex justify-center">
+   <div class="block rounded-lg cursor-pointer shadow-lg bg-gray-300 max-w-sm text-center" routerLink="/admin/scanner">
+     <div class="p-6 border border-gray-300 flex flex-col justify-center items-center">
+       <img class="" src="assets/img/qr-scan.png" alt="icon-tool">
+       <h5 class="text-gray-900 text-xl font-medium mb-2">Lector QR</h5>
+       <p class="text-gray-700 text-base mb-4">
+         En este apartado se mostrará el lector de QR para obtener el pedido.
+       </p>
+     </div>
+   </div>
+  </div>
+</div>
+<footer>
+  <a class="text-center flex justify-center" href="https://www.flaticon.com/" title="icons">Icons created by Freepik - Flaticon</a>
+</footer>
