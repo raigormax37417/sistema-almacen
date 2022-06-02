@@ -14,26 +14,26 @@
            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
            placeholder="Nombre de la herramienta" #searchTool (keyup)="onSearchTool(searchTool.value)"/>
         </div> 
-        <table class="w-screen sm:w-min-full table-auto">
+        <table class="w-screen overflow-auto sm:w-min-full table-auto">
           <thead class="border-b bg-gray-300">
             <tr>
-              <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-1 sm:px-6 py-4 text-left">
                 Herramienta 
               </th>
-              <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-1 sm:px-6 py-4 text-left">
                 Total 
               </th>
-              <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-6 py-4 text-left">
+              <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-1 sm:px-6 py-4 text-left">
                Opciones 
               </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let tool of tools | tools:page:search" class="border-b">
-              <td class="text-base lg:text-lg flex flex-col text-gray-900 font-normal sm:font-light px-6 py-4 whitespace-normal">
+              <td class="text-base lg:text-lg flex flex-col text-gray-900 font-normal sm:font-light px-1 sm:px-6 py-4 whitespace-normal">
                 {{tool.herramienta}}
               </td>
-              <td class="text-base lg:text-lg text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+              <td class="text-base lg:text-lg text-gray-900 font-light px-1 sm:px-6 py-4 whitespace-nowrap">
                 {{tool.cantidad}}
               </td>
               <td class="text-base lg:text-lg flex flex-col sm:flex-row text-gray-900 font-light px-6 py-4 whitespace-nowrap">
