@@ -22,6 +22,19 @@ export interface Tool {
   date: Date;
 }
 
+export interface Roles {
+  student?: Boolean
+  admin?: Boolean
+}
+  
+export interface User {
+  uid: string
+  email: string
+  displayName?: string
+  roles?: Roles
+  profile?:string
+}
+
 export interface orderTool {
   tool: Tool;
   amount: number;

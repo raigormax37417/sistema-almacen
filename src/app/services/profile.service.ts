@@ -1,5 +1,6 @@
 import { tap, take, Observable, of, switchMap } from 'rxjs';
-import { AuthService, User } from './auth.service';
+import { AuthService } from './auth.service';
+import { User } from '../interfaces';
 import { Firestore, CollectionReference, collection, getDoc, doc, setDoc } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { DocumentData } from 'rxfire/firestore/interfaces';
