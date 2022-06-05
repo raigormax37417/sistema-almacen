@@ -17,6 +17,11 @@ export class ToolsService {
     return docData(doc(this.firestore, path, id));
   }
   
+  setDoc(path: string, id: string, data: any) {
+    const reference = doc(this.firestore, path, id)
+    return setDoc(reference, data);
+  }
+
   deleteDoc(id: string, path: string) {
     return deleteDoc(doc(this.firestore, id, path))
   }

@@ -57,11 +57,9 @@ export class ToolsComponent implements OnInit {
     this.newTool.herramienta = firstLetter; 
     this.newTool.cantidad = parseInt(this.generateTool.value.amount);
     console.log(firstLetter);
-    try {
-      this._tools.createDoc(this.newTool, this.path, this.newTool.id); 
-    } catch (error) {
-      alert("Error permisos insuficientes");
-    }
+    this._tools.createDoc(this.newTool, this.path, this.newTool.id).then( () => {
+      throw new Error('Error al crear el registro');
+    }); 
     alert("Enviado con éxito");
     this.clearFields();
   }
@@ -73,12 +71,9 @@ export class ToolsComponent implements OnInit {
       this.EditTool.cantidad = this.generateTool.value.amount;
       this.EditTool.date = new Date;
       console.log(this.editTool);
-      try {
-        this._tools.updateDoc(this.EditTool.id, this.path, this.EditTool);
-      } catch (error) {
-        alert("Error permisos insuficientes");
-      }
-      alert("Actualizado con éxito");
+      this._tools.setDoc(this.path, this.EditTool.id, this.EditTool).catch( () => {
+          throw new Error('Error al actualizar los datos');
+      });
       this.clearFields();
     }
   }
@@ -97,10 +92,11 @@ export class ToolsComponent implements OnInit {
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
        this.tools = dataFirestore;    
+       console.log(this.tools)
       });
     });
   }
-  editTool(tool:Tool ) {
+  editTool(tool:Tool) {
     this.isEdit = true;
     this.toolRef.nativeElement.value=tool.herramienta;
     this.amountRef.nativeElement.value=tool.cantidad;
