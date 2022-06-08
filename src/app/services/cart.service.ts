@@ -54,7 +54,13 @@ export class CartService {
         return (orderTool.tool.id === tool.id);
       });
       if(item != undefined) {
-        item.amount++;
+        console.log(item);
+        if(item.amount > item.tool.cantidad - 1) {
+          alert("No hay más disponibles");
+          return
+        }
+        else
+          item.amount++;
       } else {
         const addItemTool: orderTool = {
           amount: 1,
@@ -65,7 +71,6 @@ export class CartService {
     } else {
       this.route.navigate(['/auth/login']);
     }
-    console.log("en addItemTool", this.pedido);
     const path = "profiles/"+ this.uid + "/" + this.path;
     this._tools.createDoc(this.pedido, path, this.pedido.id).then( () => {
         console.log("Registrado con exito");
@@ -84,7 +89,6 @@ export class CartService {
     } else {
       this.route.navigate(['/auth/login']);
     }
-    console.log("en removeTool", this.pedido);
     const path = "profiles/"+ this.uid + "/" + this.path;
     this._tools.createDoc(this.pedido, path, this.pedido.id).then( () => {
         console.log("Eliminado con exito");
@@ -92,7 +96,11 @@ export class CartService {
   }
   makeOnOrder(): string {
     const item = this.pedido.tools.find( (orderTool) => {
-        return (orderTool.tool === this.isOrderExist);
+        if(orderTool.tool) 
+          return (orderTool.tool);
+        else 
+          return undefined;
+        
       });
       if(item === undefined) {
         return "";
@@ -110,7 +118,7 @@ export class CartService {
       id: this.uid,
       profile: this.profile,
       tools: [],
-      status: "entregado",
+      status: "prestado",
       date: new Date
     }
     const path = "profiles/"+ this.uid + "/" + this.path;
