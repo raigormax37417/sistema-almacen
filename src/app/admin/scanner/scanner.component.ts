@@ -21,8 +21,8 @@ export class ScannerComponent implements OnInit {
       return
     }
     
-    if (order.status == 'visto') {
-      this.router.navigate(['/orders','inspect-order',order.id])
+    if (order.status == 'enviado') {
+      this.router.navigate(['/admin/orders/inspect-order', order.id])
     }
   }
 }
