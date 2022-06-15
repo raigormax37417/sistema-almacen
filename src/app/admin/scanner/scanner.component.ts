@@ -1,6 +1,7 @@
+import { Pedido } from './../../interfaces/index';
 import { Router } from '@angular/router';
 import { OrderService } from './../../services/order.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-scanner',
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScannerComponent implements OnInit {
 
+  @Output() onGetList = new EventEmitter<Pedido>()
   constructor(private orderService:OrderService, private router: Router) { }
 
   ngOnInit(): void {
@@ -22,7 +24,8 @@ export class ScannerComponent implements OnInit {
     }
     
     if (order.status == 'visto') {
-      this.router.navigate(['/orders','inspect-order',order.id])
+      // this.router.navigate(['/orders','inspect-order',order.id])
     }
+    return this.onGetList.emit(order)
   }
 }

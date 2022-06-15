@@ -11,7 +11,8 @@ import { OrderComponent } from './order/order.component';
   ],
   imports: [
     CommonModule,
-    OrdersRoutingModule
-  ]
+    // OrdersRoutingModule
+  ],
+  exports:[OrderComponent],
 })
 export class OrdersModule { }

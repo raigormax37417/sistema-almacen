@@ -1,1 +1,18 @@
-<p>dashboard works!</p>
+<main class="min-h-[50vh]">
+    <div class="heading text-center m-4 p-2">
+
+        <h1>Sistema de préstamo de Materiales ITVO</h1>
+
+    </div>
+    <app-order *ngIf="currentOrder" [order]="currentOrder"></app-order>
+    <div class="heading text-center m-4 p-2">
+        <a [routerLink]="['../scanner']">
+            <span
+                class="inline-block rounded max-w-[500px] m-4 bg-emerald-500 text-zinc-100 py-4 px-2 transition transition-transform ease-in-out hover:bg-purple-600 hover:scale-110 ">
+
+                Escanear Código
+        </span>
+        </a>
+        <app-scanner (onGetList)="showData($event)"></app-scanner>
+    </div>
+</main>

@@ -63,10 +63,10 @@ export class AuthService {
 
   signUp(user: any): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, user.email, user.password)
-      .then(r => {
+      .then(async r => {
         let emailLower = user.email.toLowerCase();
 
-        return this.updateUserData({
+        return await this.updateUserData({
           uid: r.user.uid,
           email: r.user.email!
         })
@@ -108,6 +108,8 @@ export class AuthService {
     return !!this.auth.currentUser
   }
   updateUserData(user: User) {
+    console.log('updating UserData', user);
+    
     const userRef = doc(this.firestore, `users/${user.uid}`)
     const data: User = {
       uid: user.uid,

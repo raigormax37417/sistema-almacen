@@ -1,10 +1,14 @@
-<div class="grid place-items-center h-20 ">
-    <h1 class="center-text text-violet-900 text-2xl font-bold tracking-wider">Almacen ITVO</h1>
-    <div class="flex justify-evenly w-full" *ngIf="authService.isLoggedIn()" >
-        <a routerLink="/students" class="cursor-pointer mb-2">Materiales</a>
-        <a routerLink="/profile" class="cursor-pointer mb-2">Perfil</a>
-        <a (click)="authService.logout()" class="cursor-pointer mb-2">Cerrar Sesión</a>
+<div class="min-h-[100vh]">
 
+    <div class="grid place-items-center h-20 ">
+        <h1 class="center-text text-violet-900 text-2xl font-bold tracking-wider">Almacen ITVO</h1>
+        <div class="flex justify-evenly w-full" *ngIf="authService.isLoggedIn()">
+            <a routerLink="/students" class="cursor-pointer mb-2">Materiales</a>
+            <a routerLink="/profile" class="cursor-pointer mb-2">Perfil</a>
+            <a (click)="authService.logout()" class="cursor-pointer mb-2">Cerrar Sesión</a>
+
+        </div>
     </div>
+    <router-outlet></router-outlet>
+
 </div>
-<router-outlet></router-outlet>
