@@ -19,7 +19,6 @@ export class MaterialComponent implements OnInit {
   private path = "herramientas/";
   tools : Tool[] = [];
   private unusubscribe: any;
-  QR: string = "";
 
   constructor(private _tools : ToolsService, private _cart: CartService, private _profile: ProfileService,
               private router: Router) { 
@@ -54,7 +53,7 @@ export class MaterialComponent implements OnInit {
     if(this._cart.makeOnOrder() === "")
       this.router.navigate(['/students/material']);
     else
-     this.QR = this._cart.makeOnOrder(); 
+      this._cart.makeOnOrder(); 
       this.router.navigate(['/students/qrcode']);
   }
   nextPage() {

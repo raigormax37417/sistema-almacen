@@ -1,11 +1,46 @@
-<div class="bg-gray-200 w-full h-screen">
+<div class="mt-5 bg-gray-100 w-full h-screen">
   <form [formGroup]="generateTool" class="flex items-center flex-col justify-center">
-    <label for="tool" >Herramienta</label>
-    <input type="text" name="tool" id="tool" formControlName="tool"
-      placeholder="Ingrese el nombre de la herramienta"/>
-    <label for="amount" >Cantidad</label>
-    <input type="number" min="0" name="amount" id="amount" formControlName="amount" placeholder="Ingrese la cantidad"/>
-    <button type="button" (click)="saveTool()">Guardar</button>
+   <div class="flex flex-col">
+    <label for="tool" class="form-label inline-block mb-2 text-gray-700" >Herramienta</label>
+    <input #tool type="text" name="tool" formControlName="tool"
+      class="form-control block w-full px-3 py-1.5 text-base font-normal
+        text-gray-700 bg-white bg-clip-padding
+        border border-solid border-gray-300 rounded
+        transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+      placeholder="Ingrese el nombre de la herramienta"
+      [ngClass]="{'is-invalid': isValid && Tools['tool'].errors}"/>
+    <div *ngIf="generateTool.controls['tool'].errors">
+        <div class="bg-red-100 rounded-lg py-2 px-6 mb-4 text-base text-red-700 mb-3" *ngIf="isValid && Tools['tool'].errors?.['required']">
+          Ingrese una herramienta
+        </div>  
+    </div>
+   </div>
+   <div class="flex flex-col">
+    <label for="amount" class="form-label inline-block mb-2 text-gray-700">Cantidad</label>
+    <input #amount type="number" min="0" name="amount" formControlName="amount" placeholder="Ingrese la cantidad"
+      class="form-control block w-full px-3 py-1.5 text-base font-normal
+        text-gray-700 bg-white bg-clip-padding
+        border border-solid border-gray-300 rounded
+        transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+        [ngClass]="{'is-invalid': isValid && Tools['amount'].errors }"/>
+     <div *ngIf="generateTool.controls['amount'].errors">
+        <div class="bg-red-100 rounded-lg py-2 px-6 mb-4 text-base text-red-700 mb-3" *ngIf="isValid && Tools['amount'].errors?.['required']">Ingrese una cantidad</div>
+     </div>
+   </div>
+    <button type="button" *ngIf="!isEdit" (click)="saveTool()" class="my-2 inline-block px-6 py-2.5 bg-green-500 text-white
+      font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600
+      hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Registrar</button>
+    <button type="button" *ngIf="isEdit" (click)="editSaveTool()" class="my-2 inline-block px-6 py-2.5 bg-green-500 text-white
+      font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600
+      hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Actualizar</button>
+    <button type="button" (click)="cancelTool()" class="my-2 inline-block px-6 py-2.5 bg-red-500 text-white
+      font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-600
+      hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out">Cancelar</button>
   </form>
         <table class="min-w-full table-auto" >
           <thead class="border-b bg-gray-300">
@@ -17,28 +52,29 @@
                 Cantidad
               </th>
               <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
-               Opciones
+                Editar 
               </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let tool of tools | admin:page" class="border-b">
               <td >
-                {{tool.herramienta}}
-                <input type="hidden" name="tools" #dataTools value="{{tool.herramienta}}">
+                {{ tool.herramienta }}
               </td>
               <td>
-                {{tool.cantidad}}
-                <input type="hidden" name="cantidad" #dataAmount disabled value="{{tool.cantidad}}">
+                {{ tool.cantidad }}
               </td>
               <td>
-                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">+</button>
-                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">X</button>
+                <button type="button" class="text-green-600" (click)="editTool(tool)">
+                  <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M490.3 40.4C512.2 62.27 512.2 97.73 490.3 119.6L460.3 149.7L362.3 51.72L392.4 21.66C414.3-.2135 449.7-.2135 471.6 21.66L490.3 40.4zM172.4 241.7L339.7 74.34L437.7 172.3L270.3 339.6C264.2 345.8 256.7 350.4 248.4 353.2L159.6 382.8C150.1 385.6 141.5 383.4 135 376.1C128.6 370.5 126.4 361 129.2 352.4L158.8 263.6C161.6 255.3 166.2 247.8 172.4 241.7V241.7zM192 63.1C209.7 63.1 224 78.33 224 95.1C224 113.7 209.7 127.1 192 127.1H96C78.33 127.1 64 142.3 64 159.1V416C64 433.7 78.33 448 96 448H352C369.7 448 384 433.7 384 416V319.1C384 302.3 398.3 287.1 416 287.1C433.7 287.1 448 302.3 448 319.1V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V159.1C0 106.1 42.98 63.1 96 63.1H192z"/>
+                  </svg>
+                </button>
               </td>
             </tr>
-          </tbody>
+    </tbody>
         </table>
-        <div>
+        <div class="flex flex-col sm:flex-row justify-center gap-y-5">
         <button type="button" class="bg-slate-300 rounded w-30 text-center p-2" (click)="prevPage()">Anterior</button>
         <button type="button" class="bg-slate-300 rounded w-30 text-center p-2" (click)="nextPage()"
             [disabled]="(tools | admin:page).length === 0">Siguiente</button>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,7 @@ import { Pedido } from 'src/app/interfaces';
 export class DashboardComponent implements OnInit {
 
   currentOrder? :Pedido 
-  constructor() { }
+  constructor(public userAuth: AuthService) { }
 
   ngOnInit(): void {
   }

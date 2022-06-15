@@ -3,20 +3,9 @@ import { Observable, of, switchMap, take } from 'rxjs';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, authState, updateProfile } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import firebase from "firebase/compat/app";
+import { User, Roles } from '../interfaces';
 import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
 
-export interface Roles {
-  student?: Boolean
-  admin?: Boolean
-}
-
-export interface User {
-  uid: string
-  email: string
-  displayName?: string
-  roles?: Roles
-  profile?:string
-}
 
 @Injectable({
   providedIn: 'root'
@@ -48,9 +37,7 @@ export class AuthService {
       if (user)
         this.redirect(user)
       this.router.navigate([this.redirectUrl])
-
-    }
-    )
+    })
   }
   redirect(user: User | null): void {
 
@@ -77,8 +64,6 @@ export class AuthService {
   async loginEmail(user: any): Promise<any> {
 
     try {
-
-
       let login = await signInWithEmailAndPassword(this.auth, user.email, user.password)
       console.log(login);
       
