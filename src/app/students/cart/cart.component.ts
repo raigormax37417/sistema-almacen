@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { onSnapshot } from 'firebase/firestore';
+import { DocumentData } from 'rxfire/firestore/interfaces';
 import { orderTool, Pedido, Tool } from 'src/app/interfaces';
 import { CartService } from 'src/app/services/cart.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -28,14 +29,14 @@ export class CartComponent implements OnInit {
   getOrders(uid: string) {
     const path = "profiles/" + uid + "/" + this.path;
     const fire = this._tools.getDataFirestore<Pedido>(path);
+    const dataFirestore: any[] = [];
     this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
-      const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
        this.pedidos = dataFirestore[0].tools;
         console.log(this.pedidos);
       });
-    });
+    }); 
   }
   removeTool(tool: Tool) {
     this._cart.removeTool(tool);

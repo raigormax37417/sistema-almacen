@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { setDoc, docData, updateDoc ,Firestore, doc, deleteDoc, collection } from '@angular/fire/firestore';
+import { setDoc, docData, updateDoc ,Firestore, doc, deleteDoc, collection, collectionSnapshots } from '@angular/fire/firestore';
+import { query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,11 @@ export class ToolsService {
   }
 
   deleteDoc(id: string, path: string) {
-    return deleteDoc(doc(this.firestore, id, path))
+    return deleteDoc(doc(this.firestore, path, id))
   }
 
-  updateDoc(id: string, path: string, data: any) {
-    return updateDoc(doc(this.firestore,id, path), data);
+  updateDoc(path: string, data: any) {
+    return updateDoc(doc(this.firestore, path), data);
   }
   getID() {
     return doc(collection(this.firestore, 'id')).id;
@@ -36,6 +37,11 @@ export class ToolsService {
   getDataFirestore<tipo>(path: string) {
    const dataRef = collection(this.firestore, path);
    return dataRef;
+  }
+
+  getIdElement(userId: string, path: string) {
+    const dataRef = collection(this.firestore, path);
+    return collectionSnapshots(query(dataRef, where("student.uid", "==", userId), where("status", "==", "pendiente")));
   }
 
   

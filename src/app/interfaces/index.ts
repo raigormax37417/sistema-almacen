@@ -7,6 +7,14 @@ export interface Profile {
   career: string;
 }
 
+export interface Orders {
+  id: string,
+  profile: Profile,
+  status: statusPedido,
+  tools: orderTool[],
+  date: Date
+}
+
 export interface Pedido {
   id : string;
   profile: Profile;
@@ -40,6 +48,6 @@ export interface orderTool {
   amount: number;
 }
 
-export type statusPedido = "enviado" | "visto" | "escaneado" | "prestado" | "entregado";
+export type statusPedido = "solicitado" | "creado" | "prestado" | "entregado";
 
 

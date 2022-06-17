@@ -3,6 +3,7 @@ import { QuerySnapshot, onSnapshot } from 'firebase/firestore';
 import { ToolsService } from 'src/app/services/tools.service';
 import { FormGroup, FormBuilder ,Validators } from '@angular/forms';
 import { Tool } from 'src/app/interfaces';
+import { DocumentData } from 'rxfire/firestore/interfaces';
 
 @Component({
   selector: 'app-tools',
@@ -87,8 +88,8 @@ export class ToolsComponent implements OnInit {
   }
   getDataOnFirestore() {
     const fire = this._tools.getDataFirestore<Tool>(this.path);
-    this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
       const dataFirestore: any[] = [];
+    this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
        this.tools = dataFirestore;    

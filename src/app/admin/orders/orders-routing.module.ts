@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
 
     children: [
-      { path: 'inspect-order/:order', component: OrderComponent },
+      { path: 'inspect-order', component: OrderComponent },
       { path: '**', redirectTo: 'order', pathMatch: 'full' }
     ]
   },
