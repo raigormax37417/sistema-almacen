@@ -17,13 +17,14 @@ export class ScannerComponent implements OnInit {
   }
 
   async getOrder(id: string){
+    console.log(id);
     let order  = await this.orderService.getById(id)
     console.log({id, order});
     if (!order){
       return
     }
     
-    if (order.status == 'enviado') {
+    if (order.status == 'solicitado') {
       this.router.navigate(['/admin/orders/inspect-order', order.id])
     }
     return this.onGetList.emit(order)

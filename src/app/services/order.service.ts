@@ -9,7 +9,7 @@ import { DocumentData } from 'rxfire/firestore/interfaces';
   providedIn: 'root'
 })
 export class OrderService {
-  path = 'pedidos'
+  path: string = 'pedidos/';
   colRef : CollectionReference
   currentOrder: DocumentSnapshot<DocumentData> | null = null
   constructor(private firestore: Firestore) {
@@ -17,8 +17,8 @@ export class OrderService {
    }
    getById(id:string){
      return getDoc(doc(this.colRef, id)).then(r => {
-       this.currentOrder = r
-       return r.data() as Pedido
+       this.currentOrder = r;
+       return r.data() as Pedido;
      })
    }
 }

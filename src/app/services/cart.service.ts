@@ -32,7 +32,7 @@ export class CartService {
         const path = "profiles/"+ this.uid + "/" + this.path;
         this._tools.getDoc<Pedido>(path, uid).subscribe(res => {
           if(res) {
-             p = res
+             p = res;
              this.pedido = p;
           } else
              this.initCart();             
@@ -43,7 +43,7 @@ export class CartService {
       id : this.uid,
       profile: this.profile,
       tools : [],
-      status: 'enviado',
+      status: 'solicitado',
       date : new Date
     } 
   }
@@ -65,7 +65,7 @@ export class CartService {
         const addItemTool: orderTool = {
           amount: 1,
           tool
-        };
+        }
         this.pedido.tools.push(addItemTool);
       }
     } else {
@@ -92,7 +92,7 @@ export class CartService {
     const path = "profiles/"+ this.uid + "/" + this.path;
     this._tools.createDoc(this.pedido, path, this.pedido.id).then( () => {
         console.log("Eliminado con exito");
-    })
+    });
   }
   makeOnOrder(): string {
     const item = this.pedido.tools.find( (orderTool) => {
@@ -114,17 +114,9 @@ export class CartService {
       } 
   }
   clearCart() {
-     this.pedido = {
-      id: this.uid,
-      profile: this.profile,
-      tools: [],
-      status: "prestado",
-      date: new Date
-    }
     const path = "profiles/"+ this.uid + "/" + this.path;
-    this._tools.createDoc(this.pedido, path, this.pedido.id).then( () => {
-        console.log("Eliminado con exito");
-    })
-    
+    this._tools.deleteDoc(this.pedido.id, path).then(() => {
+      console.log("Eliminado con  éxito");
+    });
   }
 }

@@ -37,7 +37,7 @@ export class MaterialComponent implements OnInit {
   getDataOnFirestore() {
     const fire = this._tools.getDataFirestore<Tool>(this.path);
     this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
-      const dataFirestore: any[] = [];
+    const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
        this.tools = dataFirestore;    

@@ -21,7 +21,6 @@ export class AppComponent {
   constructor(public authService : AuthService, private router: Router, private render: Renderer2){}
   
   toogleNav()  {
-    console.log(this.isToggleActive);
     if(this.isToggleActive) {
       this.render.removeClass(this.nav.nativeElement,'hidden');
       this.isToggleActive = false;
