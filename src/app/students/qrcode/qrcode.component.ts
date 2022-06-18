@@ -11,40 +11,45 @@ import { ToolsService } from 'src/app/services/tools.service';
   styleUrls: ['./qrcode.component.css']
 })
 export class QrcodeComponent implements OnInit {
-  
+
   public dataQR: string = "";
   public widthValue!: number;
   public qrState = true;
   private path = "pedidos/";
-  private data: any[] = [];
-  private uid: any;
+  public data: any[] = [];
+  private uid?: string;
   private id: any[] = [];
   private unusubscribe: any;
   constructor(private _tools: ToolsService, private _profile: ProfileService) {
-    this._profile.profile.subscribe( profile => {
-      this.uid = profile?.id;
-      this.generateQR(this.uid);
-    })
+
   }
 
   ngOnInit(): void {
-    this.getQrCode();
+    this._profile.profile.subscribe(profile => {
+      this.uid = profile?.id;
+
+      this.generateQR(this.uid!);
+      console.log({ uid: this.uid });
+      this.getQrCode();
+    })
   }
   getQrCode() {
     const fire = this._tools.getDataFirestore<Pedido>(this.path);
-    const userActiveOrder = query(fire, where("status", "==", "solicitado"));
+    const userActiveOrder = query(fire, where("status", "==", "solicitado"), where("profile.id", "==", this.uid));
     this.unusubscribe = onSnapshot(userActiveOrder, (QuerySnapshot) => {
-    const dataFirestore: DocumentData[] = [];
+      const dataFirestore: DocumentData[] = [];
       QuerySnapshot.forEach(doc => {
-       dataFirestore.push(doc.data());
+        dataFirestore.push(doc.data());
         this.data = dataFirestore;
         this.id.push(doc.id);
         console.log(this.data);
       });
+
     });
   }
   generateQR(uid: string) {
     this.data.forEach( (res, index) => {
+
       uid === res.id ? this.dataQR = this.id[index] : this.dataQR = "";
       this.widthValue = 256;
     })

@@ -11,6 +11,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class ScannerComponent implements OnInit {
 
   @Output() onGetList = new EventEmitter<Pedido>()
+  scannedOrder? : Pedido
   constructor(private orderService:OrderService, private router: Router) { }
 
   ngOnInit(): void {
@@ -27,6 +28,7 @@ export class ScannerComponent implements OnInit {
     if (order.status == 'solicitado') {
       this.router.navigate(['/admin/orders/inspect-order', order.id])
     }
+    this.scannedOrder = order
     return this.onGetList.emit(order)
   }
 }

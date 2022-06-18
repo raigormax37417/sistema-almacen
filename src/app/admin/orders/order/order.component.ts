@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DocumentData, onSnapshot, QuerySnapshot } from 'firebase/firestore';
 import { Orders, Pedido } from 'src/app/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,6 +11,8 @@ import { ToolsService } from 'src/app/services/tools.service';
 })
 export class OrderComponent implements OnInit {
 
+
+  @Input() order? : Pedido
   private path: string = "pedidos/";
   public search: string = "";
   public page: number = 0;

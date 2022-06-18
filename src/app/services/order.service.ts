@@ -17,8 +17,8 @@ export class OrderService {
    }
    getById(id:string){
      return getDoc(doc(this.colRef, id)).then(r => {
-       this.currentOrder = r;
-       return r.data() as Pedido;
+       this.currentOrder = r
+       return r.data() as Pedido
      })
    }
 }
