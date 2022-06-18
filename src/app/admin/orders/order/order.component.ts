@@ -14,7 +14,7 @@ export class OrderComponent implements OnInit {
   private path: string = "pedidos/";
   public search: string = "";
   public page: number = 0;
-  private unusubscribe!: DocumentData;
+  private unusubscribe: any;
   dataOrder: Orders[] = [];
   constructor(public authService: AuthService, private _tools: ToolsService) {
   }
@@ -25,28 +25,13 @@ export class OrderComponent implements OnInit {
 
   getDataOnFirestore() {
     const fire = this._tools.getDataFirestore<Pedido>(this.path);
-    const dataFirestore: DocumentData[] = [];
-    const unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
+    this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
+    const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
         dataFirestore.push(doc.data());
+        this.dataOrder = dataFirestore;
       });
-      this.readFile(dataFirestore);
     });
-  }
-  readFile(order: any) {
-    const orderResults = Object.keys(order).map(key => {
-      const value = order[key];
-      let getDate: Date = value.date.toDate();
-      const newOrder: Orders = {
-        id: value.id,
-        profile: value.profile,
-        status: value.status,
-        tools: value.tools,
-        date: getDate 
-      }
-      this.dataOrder.push(newOrder);
-    });
-    console.log(this.dataOrder);
   }
   deleteOrder(id: string) {
     if(confirm("Desea eliminar el pedido?")) 

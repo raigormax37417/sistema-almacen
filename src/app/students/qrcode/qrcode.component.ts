@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { onSnapshot, query, where } from 'firebase/firestore';
 import { DocumentData } from 'rxfire/firestore/interfaces';
-import { Tool } from 'src/app/interfaces';
+import { Pedido } from 'src/app/interfaces';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ToolsService } from 'src/app/services/tools.service';
 
@@ -31,14 +31,15 @@ export class QrcodeComponent implements OnInit {
     this.getQrCode();
   }
   getQrCode() {
-    const fire = this._tools.getDataFirestore<Tool>(this.path);
-    const dataFirestore: DocumentData[] = [];
-    const userActiveOrder = query(fire, where("student.uid", "==", this.uid), where("status", "==", "solicitado"));
+    const fire = this._tools.getDataFirestore<Pedido>(this.path);
+    const userActiveOrder = query(fire, where("status", "==", "solicitado"));
     this.unusubscribe = onSnapshot(userActiveOrder, (QuerySnapshot) => {
+    const dataFirestore: DocumentData[] = [];
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
         this.data = dataFirestore;
         this.id.push(doc.id);
+        console.log(this.data);
       });
     });
   }

@@ -43,7 +43,7 @@ export class CartService {
       id : this.uid,
       profile: this.profile,
       tools : [],
-      status: 'creado',
+      status: 'solicitado',
       date : new Date
     } 
   }
@@ -114,13 +114,6 @@ export class CartService {
       } 
   }
   clearCart() {
-     this.pedido = {
-      id: this.uid,
-      profile: this.profile,
-      tools: [],
-      status: "solicitado",
-      date: new Date
-    }
     const path = "profiles/"+ this.uid + "/" + this.path;
     this._tools.deleteDoc(this.pedido.id, path).then(() => {
       console.log("Eliminado con  éxito");

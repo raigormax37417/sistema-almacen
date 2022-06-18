@@ -29,8 +29,8 @@ export class CartComponent implements OnInit {
   getOrders(uid: string) {
     const path = "profiles/" + uid + "/" + this.path;
     const fire = this._tools.getDataFirestore<Pedido>(path);
-    const dataFirestore: any[] = [];
     this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
+    const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
        this.pedidos = dataFirestore[0].tools;

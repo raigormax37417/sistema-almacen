@@ -47,7 +47,7 @@
                 </div>
               </td>
               <td class="">{{order.status}}</td>
-              <td class="font-medium">{{order.date}}</td>
+              <td class="font-medium">{{order.date.toDate()}}</td>
               <td>
                 <button type="button" class="text-green-900 flex flex-col items-center" (click)="changeStatus(order.profile.id)">
                   Entregar
