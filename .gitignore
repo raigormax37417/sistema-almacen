@@ -6,6 +6,9 @@
 /out-tsc
 /bazel-out
 
+# Firebase Hosting Files
+/public
+
 # Node
 /node_modules
 npm-debug.log

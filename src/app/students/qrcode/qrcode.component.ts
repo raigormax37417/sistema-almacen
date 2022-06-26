@@ -41,29 +41,17 @@ export class QrcodeComponent implements OnInit {
       QuerySnapshot.forEach(doc => {
         dataFirestore.push(doc.data());
         this.id.push(doc.id);
-        console.log({ data: this.data });
+        // console.log({ data: this.data });
       });
       this.data = dataFirestore as unknown as any[];
       if (this.data.length) {
-        console.log({ datalengt: this.data[0].id });
-
-        // this.dataQR= this.data[0].id
-        // this.widthValue = 256;
-        // console.log({width: this.widthValue});
-
+        // console.log({ datalengt: this.data[0].id });
       }
-      console.log({ data: this.data[0].status });
-      console.log({ dataFirestore });
-      console.log({ dataqr: this.dataQR });
-
-      this.generateQR(this.data[0].id);
     });
   }
   generateQR(uid: string) {
     console.log('yuid', uid);
-    // console.log(data);
     this.dataQR = uid
     this.widthValue = 256;
-
   }
 }

@@ -13,7 +13,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent },
       {path: 'tools', component: ToolsComponent},
       {path: 'scanner', component: ScannerComponent},
-      // {path: 'orders', loadChildren: ()=>import('./orders/orders.module').then(e => e.OrdersModule)},
+      {path: 'orders', loadChildren: ()=>import('./orders/orders.module').then(e => e.OrdersModule)},
       {path:'**', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
   }

@@ -13,7 +13,7 @@
         </div> 
         <table class="min-w-full table-auto" >
           <thead class="border-b bg-gray-300">
-            <tr>
+            <tr class="border border-solid border-gray-600">
               <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-2 py-1 sm:px-6 sm:py-4 text-left">
                 Datos del alumno 
               </th>
@@ -31,8 +31,8 @@
               </th>
             </tr>
           </thead>
-          <tbody *ngIf="dataOrder != null">
-            <tr *ngFor="let order of dataOrder | admin:page:search" class="border-b">
+          <tbody>
+            <tr *ngFor="let order of dataOrder | admin:page:search" class="border-b border-solid border border-gray-500">
               <td class="sm:pl-4">
                 <p class="font-medium"><strong>No.Control: </strong>{{order.profile.controlNumber}}</p>
                 <p><strong>Nombre: </strong>{{order.profile.name}}</p> 

@@ -1,4 +1,4 @@
-<div class="mt-5 bg-gray-100 w-full h-screen">
+<div class="mt-5 bg-gray-100 w-full h-screen" *ngIf="authService.isLoggedIn()">
   <form [formGroup]="generateTool" class="flex items-center flex-col justify-center">
    <div class="flex flex-col">
     <label for="tool" class="form-label inline-block mb-2 text-gray-700" >Herramienta</label>

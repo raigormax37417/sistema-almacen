@@ -1,7 +1,6 @@
 <div class="flex flex-col items-center">
-    <zxing-scanner class="w-[200px] h-[150px]" (scanSuccess)="getOrder($event)"></zxing-scanner>
-    <div class="flex flex-col bg-zinc-200">
+    <zxing-scanner class="w-full" (scanSuccess)="getOrder($event)"></zxing-scanner>
+    <div *ngIf="scannedOrder != null" class="flex flex-col bg-zinc-200">
         <app-order [order]="scannedOrder"></app-order>
-
     </div>
 </div>

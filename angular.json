@@ -109,5 +109,8 @@
       }
     }
   },
-  "defaultProject": "sistema-almacen"
+  "defaultProject": "sistema-almacen",
+  "cli": {
+    "analytics": false
+  }
 }

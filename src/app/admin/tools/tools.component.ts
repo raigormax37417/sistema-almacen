@@ -4,6 +4,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { FormGroup, FormBuilder ,Validators } from '@angular/forms';
 import { Tool } from 'src/app/interfaces';
 import { DocumentData } from 'rxfire/firestore/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tools',
@@ -32,7 +33,8 @@ export class ToolsComponent implements OnInit {
   isEdit!: boolean;
 
   constructor( private _tools: ToolsService,
-               private formBuilder: FormBuilder) { }
+               private formBuilder: FormBuilder,
+               public authService: AuthService) { }
 
   ngOnInit(): void {
     this.generateTool = this.formBuilder.group({
