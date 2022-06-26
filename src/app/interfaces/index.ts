@@ -8,11 +8,11 @@ export interface Profile {
 }
 
 export interface Orders {
-  id: string,
-  profile: Profile,
-  status: statusPedido,
-  tools: orderTool[],
-  date: Date
+  id: string;
+  profile: Profile;
+  status: statusPedido;
+  tools: orderTool[];
+  date: Date;
 }
 
 export interface Pedido {

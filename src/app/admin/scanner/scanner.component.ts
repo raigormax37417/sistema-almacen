@@ -1,7 +1,7 @@
-import { Pedido } from './../../interfaces/index';
-import { Router } from '@angular/router';
+import { Orders, Pedido } from './../../interfaces/index';
 import { OrderService } from './../../services/order.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ToolsService } from 'src/app/services/tools.service';
 
 @Component({
   selector: 'app-scanner',
@@ -11,24 +11,49 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class ScannerComponent implements OnInit {
 
   @Output() onGetList = new EventEmitter<Pedido>()
-  scannedOrder? : Pedido
-  constructor(private orderService:OrderService, private router: Router) { }
+  scannedOrder? : Pedido[] = [];
+  private path: string = "pedidos/";
+  public isComplete: boolean = false;
+  public isPending: boolean = false;
+
+  constructor(private orderService:OrderService,
+              private toolService: ToolsService  ) { }
 
   ngOnInit(): void {
   }
 
   async getOrder(id: string){
     console.log(id);
-    let order  = await this.orderService.getById(id)
+    let order: Pedido = await this.orderService.getById(id)
     console.log({id, order});
+    
     if (!order){
       return
+    } else {
+      if(order.status === 'solicitado') {
+        order.status = 'prestado';
+        this.toolService.createDoc(order, this.path, order.id)
+        .then(response => {
+          this.isComplete = true;
+          this.timer();
+        })
+        .catch(error => console.log("Ocurrió un error al hacer el pedido"));
+        this.scannedOrder?.push(order);
+      } else if(order.status === 'prestado') {
+        this.isPending = true;
+        this.pendingOrder();
+      }
     }
-    
-    if (order.status == 'solicitado') {
-      this.router.navigate(['/admin/orders/inspect-order', order.id])
-    }
-    this.scannedOrder = order
-    return this.onGetList.emit(order)
+  }
+  private timer() {
+    let interval = setInterval(() => {
+      this.isComplete = false;
+      this.scannedOrder = [];
+    }, 5000);
+  }
+  private pendingOrder() {
+    let interval = setInterval(() => {
+      this.isPending = false;
+    }, 5000);
   }
 }
