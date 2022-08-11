@@ -26,6 +26,7 @@ export interface Pedido {
 export interface Tool {
   herramienta: string;
   cantidad: number;
+  img: string;
   id: string;
   date: Date;
 }

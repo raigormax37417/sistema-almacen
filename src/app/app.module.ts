@@ -6,12 +6,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth,getAuth } from '@angular/fire/auth';
+import { getStorage } from 'firebase/storage';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 //components
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { ProfileComponent } from './profile/profile.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { provideStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideStorage( () => getStorage()),
     ReactiveFormsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

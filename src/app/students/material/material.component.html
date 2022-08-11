@@ -23,6 +23,9 @@
               <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-1 sm:px-6 py-4 text-left">
                 Total 
               </th>
+              <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                Imagen
+              </th>
               <th scope="col" class="text-base lg:text-lg font-medium text-gray-900 px-1 sm:px-6 py-4 text-left">
                Opciones 
               </th>
@@ -35,6 +38,9 @@
               </td>
               <td class="text-base lg:text-lg text-gray-900 font-light px-1 sm:px-6 py-4 whitespace-nowrap">
                 {{tool.cantidad}}
+              </td>
+              <td>
+                <img class="w-24 h-24 sm:w-28 sm:h-28 bg-gray-300" src="{{tool.img}}" alt="tool-img">
               </td>
               <td class="text-base lg:text-lg flex flex-col sm:flex-row text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 <button type="button" class="bg-yellow-300 flex justify-center hover:bg-yellow-400 text-white text-sm font-bold

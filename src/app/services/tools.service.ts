@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { setDoc, docData, updateDoc ,Firestore, doc, deleteDoc, collection, collectionSnapshots } from '@angular/fire/firestore';
-import { query, where } from 'firebase/firestore';
+import { orderBy, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +37,12 @@ export class ToolsService {
   getDataFirestore<tipo>(path: string) {
    const dataRef = collection(this.firestore, path);
    return dataRef;
+  }
+
+  getQueryCollectionOrder<tipo>(path: string) {
+    const dataRef = collection(this.firestore, path);
+    const q = query(dataRef, orderBy("herramienta", "asc"))
+    return q;
   }
 
   getIdElement(userId: string, path: string) {

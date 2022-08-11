@@ -3,8 +3,8 @@ import { QuerySnapshot, onSnapshot } from 'firebase/firestore';
 import { ToolsService } from 'src/app/services/tools.service';
 import { FormGroup, FormBuilder ,Validators } from '@angular/forms';
 import { Tool } from 'src/app/interfaces';
-import { DocumentData } from 'rxfire/firestore/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-tools',
@@ -16,15 +16,18 @@ export class ToolsComponent implements OnInit {
   @ViewChild('amount') amountRef!: ElementRef;
 
   private path: string = "herramientas/";
+  private imagesLocalPath: string = "assets/img/tools/";
   public page: number = 0;
   tools : Tool[] = [];
   private unusubscribe: any;
-
+  public modal: boolean = true;
+  public Image: any = [];
   generateTool!: FormGroup;
   EditTool!: Tool;
   newTool: Tool = {
     herramienta: '',
     cantidad: 0,
+    img: '',
     id: this._tools.getID(),
     date: new Date
   };
@@ -34,17 +37,18 @@ export class ToolsComponent implements OnInit {
 
   constructor( private _tools: ToolsService,
                private formBuilder: FormBuilder,
-               public authService: AuthService) { }
+               public authService: AuthService,
+               private storage: StorageService) { }
 
   ngOnInit(): void {
+    this.getDataOnFirestore();
     this.generateTool = this.formBuilder.group({
       tool: ['', Validators.required],
       amount: ['', Validators.required]
     });
-    this.getDataOnFirestore();
   }
   getDataOnFirestore() {
-    const fire = this._tools.getDataFirestore<Tool>(this.path);
+    const fire = this._tools.getQueryCollectionOrder<Tool>(this.path);
     this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
       const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
@@ -53,7 +57,9 @@ export class ToolsComponent implements OnInit {
       });
     });
   }
-  
+  openModal(value: boolean) {
+    value == false ? this.modal = false : this.modal = true;
+  }
   get Tools() { return this.generateTool.controls; }
   
   private firstLetterUperCase(value: string) {
@@ -61,6 +67,13 @@ export class ToolsComponent implements OnInit {
     const rest = value.substring(1, value.length);
     console.log(rest);
     return firstCharacter.concat(rest);
+  }
+  async getImages() {
+    await this.storage.downloadImage('tools')
+    .then( resp => {
+      console.log(resp);
+      this.Image = resp;
+    })
   }
 
   saveTool() {

@@ -3,6 +3,7 @@
 </div>
 <div class="w-screen my-3 sm:w-full justify-center flex flex-row flex-wrap">
     <div *ngFor="let pedido of pedidos" class="flex flew-row justify-center items-center mx-6 my-2 sm:m-2 border border-gray-300 rounded-lg shadow-xl bg-white w-screen sm:max-w-sm text-center">
+      <img class="w-20 h-20" src="{{pedido.tool.img}}" alt="image-tool">
       <div class="flex flex-col flex-wrap p-6">
         <h5 class="text-gray-900 text-base font-medium mb-2">{{pedido.tool.herramienta}}</h5>
         <p class="text-gray-700 text-base mb-4 font-light">Cantidad: {{pedido.amount}}</p>

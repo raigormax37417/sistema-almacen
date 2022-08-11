@@ -11,7 +11,6 @@ import { ToolsService } from 'src/app/services/tools.service';
 })
 export class OrderComponent implements OnInit {
 
-
   @Input() order? : Pedido
   private path: string = "pedidos/";
   public search: string = "";
