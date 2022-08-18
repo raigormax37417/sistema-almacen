@@ -48,7 +48,7 @@ export class AuthService {
     this.redirectUrl = this.redirectUrl ? this.redirectUrl :this.USER_PATH
   }
 
-  signUp(user: any): Promise<any> {
+  async signUp(user: any): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, user.email, user.password)
       .then(async r => {
         let emailLower = user.email.toLowerCase();
@@ -87,7 +87,8 @@ export class AuthService {
   logout() {
     this.auth.signOut()
     this.userLoggedIn = false
-    this.router.navigate(['auth'])
+    this.router.navigate(['auth']);
+    location.reload();
   }
   isLoggedIn() {
     return !!this.auth.currentUser
