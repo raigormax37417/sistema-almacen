@@ -16,12 +16,17 @@ export class ToolsComponent implements OnInit {
   @ViewChild('amount') amountRef!: ElementRef;
 
   private path: string = "herramientas/";
-  private imagesLocalPath: string = "assets/img/tools/";
+  private imagesPath: string = "tools/";
+  private file!: File;
   public page: number = 0;
-  tools : Tool[] = [];
+  public search: string = "";
+  public imageTool: string = "assets/img/tool-box.png";
+  Tools : Tool[] = [];
   private unusubscribe: any;
   public modal: boolean = true;
   public Image: any = [];
+  public url: string = "assets/img/tool-box.png";
+  private FILESIZE: number = 2000000;
   generateTool!: FormGroup;
   EditTool!: Tool;
   newTool: Tool = {
@@ -32,8 +37,9 @@ export class ToolsComponent implements OnInit {
     date: new Date
   };
 
-  isValid = false;
-  isEdit!: boolean;
+  isValid: boolean = false;
+  isEdit: boolean = false;
+  @ViewChild('newImageInput') public newImageInput!: ElementRef;
 
   constructor( private _tools: ToolsService,
                private formBuilder: FormBuilder,
@@ -49,18 +55,18 @@ export class ToolsComponent implements OnInit {
   }
   getDataOnFirestore() {
     const fire = this._tools.getQueryCollectionOrder<Tool>(this.path);
-    this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
+    const unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
       const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
        dataFirestore.push(doc.data());
-       this.tools = dataFirestore;    
+       this.Tools = dataFirestore;    
       });
     });
   }
   openModal(value: boolean) {
-    value == false ? this.modal = false : this.modal = true;
+    value === false ? this.modal = false : this.modal = true;
   }
-  get Tools() { return this.generateTool.controls; }
+  get ToolsC() { return this.generateTool.controls; }
   
   private firstLetterUperCase(value: string) {
     const firstCharacter = value.charAt(0).toUpperCase();
@@ -75,13 +81,51 @@ export class ToolsComponent implements OnInit {
       this.Image = resp;
     })
   }
-
+  selectImage(image: string) {
+    console.log(image);
+    this.imageTool = image;
+    this.modal = true;
+    this.Image = [];
+  }
+  public uploadImage(evt: any) {
+    if(evt.target.files[0]) {
+      if(evt.target.files[0].size >= this.FILESIZE) {
+        alert("Tamaño mínimo 2mb excedido")
+        this.newImageInput.nativeElement.value = "";
+        return
+      } else {
+        var reader = new FileReader();
+        reader.readAsDataURL(evt.target.files[0]);
+        reader.onload=(event:any)=> {
+          this.url=event.target.result;
+        }
+        this.file = evt.target.files[0];
+      }
+    }
+  }
+  public async sendImage() {
+    const id = this._tools.getID();
+    await this.storage.upload(this.imagesPath, this.file.name, this.file)
+    .then( () => {
+      alert("Se a subido correctamente");
+      this.newImageInput.nativeElement.value = "";
+      this.url = "";
+    })
+    .catch( () => {
+      alert("Se a producido un error al subirlo, favor de intentarlo de nuevo");
+    })
+  }
+  public discartImage() {
+    this.url = "assets/img/tool-box.png";
+    this.newImageInput.nativeElement.value = "";
+  }
   saveTool() {
     this.isValid = true;
     if(this.generateTool.invalid ) { return };
     const firstLetter = this.firstLetterUperCase(this.generateTool.value.tool);
     this.newTool.herramienta = firstLetter; 
     this.newTool.cantidad = parseInt(this.generateTool.value.amount);
+    this.newTool.img = this.imageTool;
     console.log(firstLetter);
     this._tools.createDoc(this.newTool, this.path, this.newTool.id).catch( () => {
       throw new Error('Error al crear el registro');

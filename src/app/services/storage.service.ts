@@ -42,20 +42,18 @@ export class StorageService {
   ): Promise<string> {
     const path = `${folder}/`; {
         try {
-          // const storageRef = ref(this.storage, path);
+          this.references = [];
           const storage = getStorage();
           const pathReference = ref(storage, folder)
           listAll(pathReference)
           .then( (res) => {
             const data: any[] = [];
-            res.prefixes.forEach( (folderRef) => {
-              console.log(folderRef);
-            })
             res.items.forEach((itemsRef) => {
               itemsRef.fullPath;
-              // console.log(itemsRef);
-              this.references.push(itemsRef.fullPath);
-              // console.log(this.references);
+              this.getImagesURL(itemsRef.fullPath)
+              .then(response => {
+                this.references.push(response);
+              })
             })
             return this.references;
           })
@@ -78,9 +76,40 @@ export class StorageService {
         } catch (e : any) {
           console.error(e);
         }
-      
       return this.references;
     }
+  }
+ private async getImagesURL(name: string): Promise<string> {
+    let url: any;
+    try {
+    const storage = getStorage();    
+    const pathReference = ref(storage, name);
+    url = await getDownloadURL(pathReference)
+    .then( (response) => {
+      return response;
+    })
+    .catch( (error) => {
+      switch(error.code) {
+        case 'storage/object-not-found':
+          console.log("Objeto no encontrado",error.code);
+        break;
+        case 'storage/unauthorized':
+          console.log("No autorizado",error.code);
+        break;
+        case 'storage/canceled':
+          console.log("cancelado",error.code);
+        break;
+        case 'storage/unknown':
+          console.log("Desconocido",error.code);
+        break;
+      }
+    });
+  } catch (e : any) {
+    console.error(e);
+  }
+
+  return url;
+
   }
   async removeImg(
     url: string
