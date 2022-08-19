@@ -15,17 +15,19 @@ export class AppComponent {
   user$!: Observable<User | null>
   redirectUrl: string = ''
   title = 'sistema-almacen';
-  isToggleActive: Boolean = false;
+  isToggleActive: Boolean = true;
   @ViewChild('nav') nav!: ElementRef;
 
   constructor(public authService : AuthService, private router: Router, private render: Renderer2){}
   
-  toogleNav()  {
+  toggleNav()  {
     if(this.isToggleActive) {
-      this.render.removeClass(this.nav.nativeElement,'hidden');
+      // this.render.removeClass(this.nav.nativeElement,'hidden');
+      this.render.setStyle(this.nav.nativeElement, 'display', 'flex')
       this.isToggleActive = false;
     } else {
-      this.render.addClass(this.nav.nativeElement, 'hidden');
+      // this.render.addClass(this.nav.nativeElement, 'hidden');
+      this.render.setStyle(this.nav.nativeElement, 'display', 'none');
       this.isToggleActive = true;
     }
   }
