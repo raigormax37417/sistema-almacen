@@ -5,8 +5,6 @@
 /tmp
 /out-tsc
 /bazel-out
-
-# Firebase Hosting Files
 /public
 
 # Node
