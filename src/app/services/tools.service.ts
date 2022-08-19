@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { setDoc, docData, updateDoc ,Firestore, doc, deleteDoc, collection, collectionSnapshots } from '@angular/fire/firestore';
-import { orderBy, query, where } from 'firebase/firestore';
+import { orderBy, OrderByDirection, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +39,9 @@ export class ToolsService {
    return dataRef;
   }
 
-  getQueryCollectionOrder<tipo>(path: string) {
+  getQueryCollectionOrder<tipo>(path: string, value: string, option: OrderByDirection) {
     const dataRef = collection(this.firestore, path);
-    const q = query(dataRef, orderBy("herramienta", "asc"))
+    const q = query(dataRef, orderBy(value, option));
     return q;
   }
 

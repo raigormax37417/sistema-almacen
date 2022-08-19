@@ -25,7 +25,7 @@ export class OrderComponent implements OnInit {
   }
 
   getDataOnFirestore() {
-    const fire = this._tools.getDataFirestore<Pedido>(this.path);
+    const fire = this._tools.getQueryCollectionOrder<Pedido>(this.path, "date", "desc");
     this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
     const dataFirestore: any[] = [];
       QuerySnapshot.forEach(doc => {
