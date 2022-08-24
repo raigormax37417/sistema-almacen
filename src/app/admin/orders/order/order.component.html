@@ -15,7 +15,7 @@
   <!-- <div class="flex flex-col"> -->
 
     <div class="">{{order.status}}</div>
-    <div class="font-medium">{{order.date.toLocaleString()}}</div>
+    <div class="font-medium">{{formatDate(order.date)}}</div>
   <!-- </div> -->
   <div>
     <button type="button" class="text-green-900 flex flex-col items-center" (click)="changeStatus(order.profile.id!)">

@@ -67,4 +67,7 @@ export class OrderComponent implements OnInit {
       this.page = 0;
       this.search = search;
   }
+  formatDate(date: any){
+    return new Date(date.seconds * 1000)
+  }
 }

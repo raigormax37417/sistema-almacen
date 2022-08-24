@@ -43,7 +43,7 @@ export class CartService {
       id : this.uid,
       profile: this.profile,
       tools : [],
-      status: 'solicitado',
+      status: 'creado',
       date : new Date
     } 
   }

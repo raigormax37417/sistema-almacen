@@ -13,7 +13,7 @@ export interface Orders {
   profile: Profile;
   status: statusPedido;
   tools: orderTool[];
-  date: Date;
+  date: Date | Timestamp | {seconds: number, milliseconds:number};
 }
 
 export interface Pedido {
@@ -21,7 +21,7 @@ export interface Pedido {
   profile: Profile;
   tools : orderTool[];
   status: statusPedido;
-  date : Date | Timestamp;
+  date : Date | Timestamp | {seconds: number, milliseconds:number};
 }
 
 export interface Tool {

@@ -11,51 +11,64 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class ScannerComponent implements OnInit {
 
   @Output() onGetList = new EventEmitter<Pedido>()
-  scannedOrder? : Pedido 
+  scannedOrder?: Pedido
   private path: string = "pedidos/";
+  public isRegistered: boolean = false;
   public isComplete: boolean = false;
   public isPending: boolean = false;
 
-  constructor(private orderService:OrderService,
-              private toolService: ToolsService  ) { }
+  constructor(private orderService: OrderService,
+    private toolService: ToolsService) { }
 
   ngOnInit(): void {
   }
 
-  async getOrder(id: string){
+  async getOrder(id: string) {
     console.log(id);
     let order: Pedido = await this.orderService.getById(id)
-    console.log({id, order});
-    
-    if (!order){
+    console.log({ id, order });
+
+    if (!order) {
       return
     } else {
       this.scannedOrder = order
-      if(order.status === 'solicitado') {
-        order.status = 'prestado';
+      if (order.status === 'creado') {
+        order.status = 'solicitado';
         this.orderService.update(order)
-        .then(response => {
-          this.isComplete = true;
-          this.timer();
-        })
-        .catch(error => console.log("Ocurrió un error al hacer el pedido"));
+          .then(response => {
+            this.isRegistered = true;
+            this.registeredOrder();
+          })
+          .catch(error => console.log("Ocurrió un error al hacer el pedido"));
         this.scannedOrder = order;
-      } else if(order.status === 'prestado') {
-        this.scannedOrder = order;
+      } else if (order.status === 'prestado') {
         this.isPending = true;
+        this.scannedOrder = order;
         this.pendingOrder();
+      }
+      else if (order.status === 'entregado') {
+        this.scannedOrder = order;
+        this.isComplete = true;
+        this.completeOrder();
+
       }
     }
   }
-  private timer() {
-    let interval = setInterval(() => {
-      this.isComplete = false;
-      this.scannedOrder =  undefined;
+  private pendingOrder() {
+    let interval = setTimeout(() => {
+      this.isPending = false;
+      // this.scannedOrder =  undefined;
     }, 5000);
   }
-  private pendingOrder() {
-    let interval = setInterval(() => {
-      this.isPending = false;
+  private registeredOrder() {
+    let interval = setTimeout(() => {
+      this.isRegistered = false;
+    }, 5000);
+  }
+  private completeOrder() {
+    let interval = setTimeout(() => {
+      this.isComplete = false;
+      this.scannedOrder = undefined;
     }, 5000);
   }
 }
