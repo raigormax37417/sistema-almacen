@@ -4,17 +4,19 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 import { OrderComponent } from './order/order.component';
+import { OrdersComponent } from './orders.component';
 
 
 @NgModule({
   declarations: [
     OrderComponent,
+    OrdersComponent,
   ],
   imports: [
     CommonModule,
     OrdersRoutingModule,
     PipesModule
   ],
-  exports:[OrderComponent],
+  exports:[OrderComponent, OrdersComponent],
 })
 export class OrdersModule { }
