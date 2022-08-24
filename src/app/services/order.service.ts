@@ -1,5 +1,5 @@
 import { Pedido } from './../interfaces/index';
-import { Firestore, CollectionReference, collection, getDoc, doc, DocumentSnapshot } from '@angular/fire/firestore';
+import { Firestore, CollectionReference, collection, getDoc, doc, DocumentSnapshot, setDoc } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { DocumentData } from 'rxfire/firestore/interfaces';
 
@@ -20,5 +20,8 @@ export class OrderService {
        this.currentOrder = r
        return r.data() as Pedido
      })
+   }
+   update(order: Pedido){
+     return setDoc(doc(this.colRef, order.id), order)
    }
 }

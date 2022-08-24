@@ -11,7 +11,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class ScannerComponent implements OnInit {
 
   @Output() onGetList = new EventEmitter<Pedido>()
-  scannedOrder? : Pedido[] = [];
+  scannedOrder? : Pedido 
   private path: string = "pedidos/";
   public isComplete: boolean = false;
   public isPending: boolean = false;
@@ -30,16 +30,18 @@ export class ScannerComponent implements OnInit {
     if (!order){
       return
     } else {
+      this.scannedOrder = order
       if(order.status === 'solicitado') {
         order.status = 'prestado';
-        this.toolService.createDoc(order, this.path, order.id)
+        this.orderService.update(order)
         .then(response => {
           this.isComplete = true;
           this.timer();
         })
         .catch(error => console.log("Ocurrió un error al hacer el pedido"));
-        this.scannedOrder?.push(order);
+        this.scannedOrder = order;
       } else if(order.status === 'prestado') {
+        this.scannedOrder = order;
         this.isPending = true;
         this.pendingOrder();
       }
@@ -48,7 +50,7 @@ export class ScannerComponent implements OnInit {
   private timer() {
     let interval = setInterval(() => {
       this.isComplete = false;
-      this.scannedOrder = [];
+      this.scannedOrder =  undefined;
     }, 5000);
   }
   private pendingOrder() {

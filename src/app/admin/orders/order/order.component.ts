@@ -1,3 +1,4 @@
+import { OrderService } from './../../../services/order.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { DocumentData, onSnapshot, QuerySnapshot } from 'firebase/firestore';
 import { Orders, Pedido } from 'src/app/interfaces';
@@ -17,7 +18,7 @@ export class OrderComponent implements OnInit {
   public page: number = 0;
   private unusubscribe: any;
   dataOrder: Orders[] = [];
-  constructor(public authService: AuthService, private _tools: ToolsService) {
+  constructor(public authService: AuthService, private orderService: OrderService) {
   }
 
   ngOnInit(): void {
@@ -25,30 +26,35 @@ export class OrderComponent implements OnInit {
   }
 
   getDataOnFirestore() {
-    const fire = this._tools.getQueryCollectionOrder<Pedido>(this.path, "date", "desc");
-    this.unusubscribe = onSnapshot(fire, (QuerySnapshot) => {
-    const dataFirestore: any[] = [];
-      QuerySnapshot.forEach(doc => {
-        dataFirestore.push(doc.data());
-        this.dataOrder = dataFirestore;
-      });
-    });
   }
   deleteOrder(id: string) {
     if(confirm("Desea eliminar el pedido?")) 
-      this._tools.deleteDoc(id,this.path);
+      // this.orderService.deleteDoc(id,this.path);
+      console.log('delete');
+      
     else return;
   }
   changeStatus(id: string) {
-    if(confirm("Desea cambiar el estado del pedido?")) {
+    if( this.order?.status=='solicitado' && confirm("Desea cambiar el estado del pedido?")) {
       const path: string = "pedidos/" + id + "/";
-        this._tools.updateDoc(path, {
-          status: "entregado",      
-      }).then( function() {
+      this.order.status = 'prestado'
+      this.orderService.update(this.order).then( ()=> {
         console.log("pedido entregado");
+        this.order = undefined
       });
     }
-    else return;
+    else  if( this.order?.status=='prestado' && confirm("Confirma que se han devuelto las herramientas prestadas?")) {
+      const path: string = "pedidos/" + id + "/";
+      this.order.status = 'entregado'
+        this.orderService.update(this.order).then( () =>{
+        console.log("Material devuelto");
+        this.order = undefined
+      });
+    }
+    else 
+    this.order = undefined
+
+    return;
   }
   nextPage() {
     this.page+=5;

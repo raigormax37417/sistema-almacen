@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 export interface Profile {
   id? : string;
   name: string;
@@ -20,7 +21,7 @@ export interface Pedido {
   profile: Profile;
   tools : orderTool[];
   status: statusPedido;
-  date : Date;
+  date : Date | Timestamp;
 }
 
 export interface Tool {
