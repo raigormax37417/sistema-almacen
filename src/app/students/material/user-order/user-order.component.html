@@ -1,0 +1,57 @@
+<div *ngIf="order" class="mt-10 border-b border-solid border justify-center w-full mx-auto border-gray-500 flex gap-2">
+  <!-- <div *ngFor="let userOrder of order">
+    <div class="">
+      <h4 class="bg-gray-400 p-2 w-100">Datos del Alumno</h4>
+      <p class="font-bold"><strong>No.Control: </strong>{{userOrder.profile.controlNumber}}</p>
+      <p><strong>Nombre: </strong>{{userOrder.profile.name}}</p>
+      <p><strong>Carrera: </strong>{{userOrder.profile.career}}</p>
+      <p><strong>Semestre: </strong> {{userOrder.profile.semester}}</p>
+      <p><strong>Grupo: </strong> {{userOrder.profile.group}}</p>
+    </div>
+    <div class="flex flex-col">
+      <h4 class="bg-gray-400 p-2 w-100">Herramientas</h4>
+      <div *ngFor="let orderTool of userOrder.tools" class="gap-y-2">
+        <p><strong>Herramienta: </strong>{{orderTool.tool.herramienta}}</p>
+        <p><strong>Cantidad: </strong>{{orderTool.amount}}</p>
+      </div>
+    </div>
+    
+  </div> -->
+  <table class="min-w-full table-auto" >
+    <thead class="border-b bg-gray-300">
+      <tr class="border border-solid border-gray-600">
+        <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-2 py-1 sm:px-6 sm:py-4 text-left">
+          Datos del alumno 
+        </th>
+        <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-2 py-1 sm:px-6 sm:py-4 text-left">
+          Herramientas 
+        </th>
+        <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-2 py-1 sm:px-6 sm:py-4 text-left">
+          Estado del Pedido 
+        </th>
+        <th scope="col" class="text-xs md:text-sm font-medium text-gray-900 px-2 py-1 sm:px-6 sm:py-4 text-left">
+          Fecha 
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of order" class="border-b border-solid border border-gray-500">
+        <td class="sm:pl-4">
+          <p class="font-medium"><strong>No.Control: </strong>{{order.profile.controlNumber}}</p>
+          <p><strong>Nombre: </strong>{{order.profile.name}}</p> 
+          <p><strong>Carrera: </strong>{{order.profile.career}}</p>
+          <p><strong>Semestre: </strong> {{order.profile.semester}}</p>
+          <p><strong>Grupo: </strong> {{order.profile.group}}</p>
+        </td>
+        <td class="flex flex-col" >
+          <div *ngFor="let orderTool of order.tools" class="gap-y-2">
+            <p><strong>Herramienta: </strong>{{orderTool.tool.herramienta}}</p>
+            <p><strong>Cantidad: </strong>{{orderTool.amount}}</p>
+          </div>
+        </td>
+        <td class="">{{order.status}}</td>
+        <td class="font-medium">{{formatDate(order.date)}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
