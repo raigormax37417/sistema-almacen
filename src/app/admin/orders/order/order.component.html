@@ -14,8 +14,8 @@
   </div>
   <!-- <div class="flex flex-col"> -->
 
-    <div class="">{{order.status}}</div>
-    <div class="font-medium">{{formatDate(order.date)}}</div>
+    <div class="flex flex-col"><p><strong>Estado:</strong>{{order.status}}</p></div>
+    <div class="flex flex-col font-medium"><p>{{formatDate(order.date)}}</p></div>
   <!-- </div> -->
   <div>
     <button type="button" class="text-green-900 flex flex-col items-center" (click)="changeStatus(order.profile.id!)">

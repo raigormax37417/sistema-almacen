@@ -15,7 +15,7 @@ export class OrderService {
   constructor(private firestore: Firestore) {
     this.colRef = collection(firestore, this.path)
    }
-   getById(id:string){
+   getById(id:string | undefined){
      return getDoc(doc(this.colRef, id)).then(r => {
        this.currentOrder = r
        return r.data() as Pedido
