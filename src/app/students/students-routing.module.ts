@@ -4,6 +4,7 @@ import { MaterialComponent } from './material/material.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QrcodeComponent } from './qrcode/qrcode.component';
+import { UserOrderComponent } from './material/user-order/user-order.component';
 
 const routes: Routes = [{
   path:'',
@@ -12,6 +13,7 @@ const routes: Routes = [{
   children:[
     {path: 'material', component: MaterialComponent},
     {path: 'qrcode', component: QrcodeComponent},
+    {path: 'material/user-order', component: UserOrderComponent},
     {path: '**', redirectTo:'material', pathMatch: 'full'},
   ],
 }];

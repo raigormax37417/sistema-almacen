@@ -94,19 +94,18 @@ export class CartService {
         console.log("Eliminado con exito");
     });
   }
+  isOrderEmpty(): boolean {
+    const item = this.pedido.tools.find( (orderTool) => orderTool.tool ? orderTool.tool : undefined);
+    return item === undefined ? true : false;
+  }
   makeOnOrder(): string {
-    const item = this.pedido.tools.find( (orderTool) => {
-        if(orderTool.tool) 
-          return (orderTool.tool);
-        else 
-          return undefined;
-        
-      });
+    const item = this.pedido.tools.find( (orderTool) => orderTool.tool ? orderTool.tool : undefined);
       if(item === undefined) {
         return "";
       } 
       else {
-        this._tools.createDoc(this.pedido, this.path, this.pedido.id).then( () => {
+        const id = this._tools.getID();
+        this._tools.createDoc(this.pedido, this.path, id).then( () => {
             console.log("Creando pedido con exito");
         });
         this.clearCart(); 

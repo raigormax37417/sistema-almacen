@@ -7,13 +7,14 @@ import { ToolsPipe } from '../pipes/tools.pipe';
 import { QrcodeComponent } from './qrcode/qrcode.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CartComponent } from './cart/cart.component';
-
+import { UserOrderComponent } from './material/user-order/user-order.component';
 @NgModule({
   declarations: [
     MaterialComponent,
     ToolsPipe,
     QrcodeComponent,
-    CartComponent
+    CartComponent,
+    UserOrderComponent
   ],
   imports: [
     CommonModule,

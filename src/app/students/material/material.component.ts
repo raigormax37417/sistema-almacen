@@ -6,6 +6,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { getAuth } from 'firebase/auth';
 import { Router } from '@angular/router'; 
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-material',
@@ -49,12 +50,14 @@ export class MaterialComponent implements OnInit {
   }
   generateQR() {
     this.unusubscribe();
-    this._cart.makeOnOrder();
-    if(this._cart.makeOnOrder() === "")
-      this.router.navigate(['/students/material']);
-    else
-      this._cart.makeOnOrder(); 
+    const response = this._cart.isOrderEmpty();
+    if(response === true) {
+      alert("Seleccione alguna herramienta");
+    }
+    else {
+      this._cart.makeOnOrder();
       this.router.navigate(['/students/qrcode']);
+    } 
   }
   nextPage() {
     this.page+=5;
