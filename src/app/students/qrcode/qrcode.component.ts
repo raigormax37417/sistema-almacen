@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { onSnapshot, query, where } from 'firebase/firestore';
 import { DocumentData } from 'rxfire/firestore/interfaces';
 import { Pedido } from 'src/app/interfaces';
@@ -18,9 +19,14 @@ export class QrcodeComponent implements OnInit {
   private path = "pedidos/";
   public data: any[] = [];
   private uid?: string;
+  private uidQR?: string;
   private id: any[] = [];
   private unusubscribe: any;
-  constructor(private _tools: ToolsService, private _profile: ProfileService) {
+  constructor(private _tools: ToolsService, private _profile: ProfileService, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.uidQR = params['id'];
+      console.log(this.uidQR);
+    });
     this._profile.profile.subscribe(profile => {
       this.uid = profile?.id;
       this.getQrCode();
@@ -52,6 +58,6 @@ export class QrcodeComponent implements OnInit {
   generateQR(uid: string) {
     console.log('yuid', uid);
     this.dataQR = uid
-    this.widthValue = 256;
+    this.widthValue = 256; 
   }
 }

@@ -16,48 +16,48 @@
     </button>
     <nav #nav [ngClass]="{'active': isToggleActive }" class="sm:right-0 hidden sm:block relative w-full
                   md:flex flex-wrap items-center justify-between
-                  py-4 bg-gray-100 text-gray-500 hover:text-gray-700
+                  py-4 bg-blue-700 text-gray-500 hover:text-gray-700
                   focus:text-gray-700 shadow-lg navbar navbar-expand-lg navbar-light">
       <div class="container-fluid w-full flex flex-wrap items-center justify-between px-6">
         <ul
           class="navbar-nav flex flex-col h-screen sm:h-full sm:flex-row flex-wrap pl-0 gap-10 sm:gap-0 list-style-none mr-auto">
           <li class="nav-item px-2">
             <a routerLink="/admin/dashboard" aria-current="page"
-              class="nav-link active hidden sm:block text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Dashboard</a>
+              class="nav-link active hidden sm:block text-white hover:text-white focus:text-white p-0">Dashboard</a>
             <a routerLink="/admin/dashboard" aria-current="page" (click)="toggleNav()"
-              class="nav-link active sm:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Dashboard</a>
+              class="nav-link active sm:hidden text-white hover:text-white focus:text-white p-0">Dashboard</a>
           </li>
           <li class="nav-item pr-2">
             <a routerLink="{{(authService.user$ | async)?.roles?.admin? '/admin/tools':'/students'}}"
-              class="nav-link hidden sm:block text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Materiales</a>
+              class="nav-link hidden sm:block text-white hover:text-white focus:text-white p-0">Materiales</a>
             <a routerLink="{{(authService.user$ | async)?.roles?.admin? '/admin/tools': '/students'}}"
               (click)="toggleNav()"
-              class="nav-link sm:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Materiales</a>
+              class="nav-link sm:hidden text-white hover:text-white focus:text-white p-0">Materiales</a>
           </li>
           <li class="nav-item pr-2" *ngIf="(authService.user$ | async)?.roles?.admin">
             <a routerLink="/admin/scanner"
-              class="nav-link text-gray-500 hidden sm:block hover:text-gray-700 focus:text-gray-700 p-0">Scanner</a>
+              class="nav-link text-white hidden sm:block hover:text-white focus:text-white p-0">Scanner</a>
             <a routerLink="/admin/scanner" (click)="toggleNav()"
-              class="nav-link sm:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Scanner</a>
+              class="nav-link sm:hidden text-white hover:text-white focus:text-white p-0">Scanner</a>
           </li>
           <li class="nav-item pr-2" *ngIf="(authService.user$ | async)?.roles?.admin">
             <a routerLink="/admin/orders/inspect-order"
-              class="nav-link text-gray-500 hidden sm:block hover:text-gray-700 focus:text-gray-700 p-0">Pedidos</a>
+              class="nav-link text-white hidden sm:block hover:text-white focus:text-white p-0">Pedidos</a>
             <a routerLink="/admin/orders/inspect-order" (click)="toggleNav()"
-              class="nav-link sm:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Pedidos</a>
+              class="nav-link sm:hidden text-white hover:text-white focus:text-white p-0">Pedidos</a>
           </li>
           <li class="nav-item pr-2">
             <a routerLink="/profile"
-              class="nav-link text-gray-500 hidden sm:block hover:text-gray-700 focus:text-gray-700 p-0">Perfil</a>
+              class="nav-link text-white hidden sm:block hover:text-white focus:text-white p-0">Perfil</a>
             <a routerLink="/profile" (click)="toggleNav()"
-              class="nav-link sm:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">Perfil</a>
+              class="nav-link sm:hidden text-white hover:text-white focus:text-white p-0">Perfil</a>
           </li>
           <li class="nav-item pr-2">
             <a (click)="authService.logout()"
-              class="nav-link hidden sm:block text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0 cursor-pointer">Cerrar
+              class="nav-link hidden sm:block text-white hover:text-white focus:text-white p-0 cursor-pointer">Cerrar
               Sesión</a>
             <a (click)="authService.logout()" (click)="toggleNav()"
-              class="nav-link sm:hidden text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0 cursor-pointer">Cerrar
+              class="nav-link sm:hidden text-white hover:text-white focus:text-white p-0 cursor-pointer">Cerrar
               Sesión</a>
           </li>
         </ul>

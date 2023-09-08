@@ -45,6 +45,12 @@ export class ToolsService {
     return q;
   }
 
+  getUserOrder<tipo>(path: string, id: string | undefined) {
+    const dataRef = collection(this.firestore, path);
+    const q = collectionSnapshots(query(dataRef, where("id", "==", id), where("status", "!=", "entregado")));
+    return q;
+  }
+
   getQueryCollectionOrder<tipo>(path: string, value: string, option: OrderByDirection) {
     const dataRef = collection(this.firestore, path);
     const q = query(dataRef, orderBy(value, option));

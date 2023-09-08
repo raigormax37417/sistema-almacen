@@ -15,6 +15,7 @@ export class CartService {
   private uid! : any;
   private profile!: any;
   private isOrderExist!: Tool;
+  private isOrderCompleted!: boolean;
 
   constructor(private _profile: ProfileService, public _tools: ToolsService, public route: Router) {
     const auth =  getAuth();
@@ -98,10 +99,21 @@ export class CartService {
     const item = this.pedido.tools.find( (orderTool) => orderTool.tool ? orderTool.tool : undefined);
     return item === undefined ? true : false;
   }
+  isPendingOrder(uid: string): boolean {
+    
+    const order = this._tools.getUserOrder(this.path, uid)
+    .subscribe(res => {
+      res ? this.isOrderCompleted = true : this.isOrderCompleted = false;
+    })
+    
+    console.log(order, this.isOrderCompleted);
+    return this.isOrderCompleted;
+    
+  }
   makeOnOrder(): string {
     const item = this.pedido.tools.find( (orderTool) => orderTool.tool ? orderTool.tool : undefined);
       if(item === undefined) {
-        return "";
+        return ""; 
       } 
       else {
         const id = this._tools.getID();
@@ -109,7 +121,7 @@ export class CartService {
             console.log("Creando pedido con exito");
         });
         this.clearCart(); 
-        return this.pedido.id;
+        return id;
       } 
   }
   clearCart() {

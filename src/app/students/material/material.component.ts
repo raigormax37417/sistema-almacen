@@ -21,13 +21,21 @@ export class MaterialComponent implements OnInit {
   tools : Tool[] = [];
   private unusubscribe: any;
 
-  constructor(private _tools : ToolsService, private _cart: CartService, private _profile: ProfileService,
-              private router: Router) { 
+  constructor(
+    private _tools : ToolsService, 
+    private _cart: CartService, 
+    private _profile: ProfileService,
+    private router: Router
+  ) {
+
     this._profile.profile.subscribe( profile => {
       this.uid = profile?.id;
     })
+
     const auth =  getAuth();
+
     const user = auth.currentUser;
+
     user ? "" : this.router.navigate(['/auth/login']);
      
   }
@@ -55,8 +63,12 @@ export class MaterialComponent implements OnInit {
       alert("Seleccione alguna herramienta");
     }
     else {
-      this._cart.makeOnOrder();
-      this.router.navigate(['/students/qrcode']);
+     console.log(this.uid);
+     if (this._cart.isPendingOrder(this.uid) ) {
+      return alert("tiene pedidos sin entregar")
+     }  
+      let id = this._cart.makeOnOrder();
+      this.router.navigate(['/students/qrcode', {"id": id}]);
     } 
   }
   nextPage() {

@@ -11,7 +11,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class ScannerComponent implements OnInit {
 
   @Output() onGetList = new EventEmitter<Pedido>()
-  scannedOrder?: Pedido
+  scannedOrder?: Pedido;
   private path: string = "pedidos/";
   public isRegistered: boolean = false;
   public isComplete: boolean = false;
@@ -25,34 +25,36 @@ export class ScannerComponent implements OnInit {
 
   async getOrder(id: string) {
     console.log(id);
-    let order: Pedido = await this.orderService.getById(id)
-    console.log({ id, order });
-
-    if (!order) {
+    const userOrder: any[] = [];
+    this.toolService.getUserOrder<Pedido>(this.path, id)
+    .subscribe( order => {
+      order.map( response => {
+       console.log(response.data());
+       this.scannedOrder = response.data() as Pedido;
+      })
+    });
+    if (!this.scannedOrder) {
       return
     } else {
-      this.scannedOrder = order
-      if (order.status === 'creado') {
-        order.status = 'solicitado';
-        this.orderService.update(order)
+      if (this.scannedOrder.status === 'creado') {
+        this.scannedOrder.status = 'solicitado';
+        this.orderService.update(this.scannedOrder)
           .then(response => {
             this.isRegistered = true;
             this.registeredOrder();
           })
           .catch(error => console.log("Ocurrió un error al hacer el pedido"));
-        this.scannedOrder = order;
-      } else if (order.status === 'prestado') {
+      } else if (this.scannedOrder.status === 'prestado') {
         this.isPending = true;
-        this.scannedOrder = order;
         this.pendingOrder();
       }
-      else if (order.status === 'entregado') {
-        this.scannedOrder = order;
+      else if (this.scannedOrder.status === 'entregado') {
         this.isComplete = true;
         this.completeOrder();
-
       }
     }
+    // console.log({ id, order });
+
   }
   private pendingOrder() {
     let interval = setTimeout(() => {
