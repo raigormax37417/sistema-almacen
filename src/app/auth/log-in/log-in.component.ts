@@ -54,6 +54,7 @@ export class LogInComponent implements OnInit {
       this.router.navigate(['auth'])
     }
   }
+  
   googleLogin(){
     this.authService.loginGoogle()
   }
