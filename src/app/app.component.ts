@@ -75,6 +75,8 @@ export class AppComponent {
   }
 
   public isActiveUser(): boolean {
+    console.log(this.authService.isLoggedIn());
+    
     return this.authService.isLoggedIn();
   }
 }
